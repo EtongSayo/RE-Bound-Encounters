@@ -1,0 +1,6 @@
+<w>
+	<file name = "ui\ui_options_slider_rebound_encounters.dds">
+        <texture id = "rebound_encounters_main_mcm_banner"		        x="0"	y="0"	width="1024"	height="70" />
+        <texture id = "rebound_encounters_more_options_banner"		        x="0"	y="71"	width="1024"	height="70" />
+    </file>
+</w>

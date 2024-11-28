@@ -1,0 +1,434 @@
+--[[ Some monkey patch for vanilla functions ]]
+
+local ini_mutant = ini_file("items\\settings\\mutant_loot.ltx")
+
+local item_prop_table = { uses = 1, cond_r = {30,70} , cond_ct = "part" , cond_cr = {0.5,0.75,1} }
+function get_item_prop_table()
+	item_prop_table.uses = math.random(2)
+	return item_prop_table
+end
+
+kind_to_section = {
+	["SM_ALGHOUL"]     = "alghoul",
+	["SM_AMEBA"]       = "ameba",
+	["SM_BAYUN"]       = "bayun",
+	["SM_BONES"]       = "bones",
+	["SM_BURENKA"]     = "burenka",
+	["SM_CLAW"]        = "claw",
+	["SM_DOBERMAN"]	   = "doberman",
+	["SM_DURIEL"]      = "duriel",
+	["SM_FEV"]         = "fev",
+	["SM_FIST"]        = "fist",
+	["SM_GERUDA"]      = "geruda",
+	["SM_GONCHAYA"]    = "gonchaya",
+	["SM_GROTESQUE"]   = "grotesque",
+	["SM_HAYZED"]      = "hayzed",
+	["SM_ISKATEL"]     = "iskatel",
+	["SM_JAW"]         = "jaw",
+	["SM_JUGGER"]      = "jugger",
+	["SM_KANNIBAL"]    = "kannibal",
+	["SM_KARLIK"]      = "karlik",
+	["SM_KOMAR"]       = "komar",
+	["SM_KOYOT"]       = "koyot",
+	["SM_KRISA"]       = "krisa",
+	["SM_LATSERTIAN"]  = "latsertian",
+	["SM_LETALKA"]     = "letalka",
+	["SM_LURKER"]      = "lurker",
+	["SM_FANG"]        = "fang",
+	["SM_MIZGIR"]      = "mizgir",
+	["SM_FUR"]         = "fur",
+	["SM_MUSKUL"]      = "muskul",
+	["SM_OBRAZET"]     = "obrazet",
+	["SM_PREDADAR"]    = "predadar",
+	["SM_PSYSUCKER"]   = "psysucker",
+	["SM_PYAT"]        = "pyat",
+	["SM_ROGACH"]      = "rogach",
+	["SM_SCALES"]      = "scales",
+	["SM_SCUTTLER"]    = "scuttler",
+	["SM_SILVAN"]      = "silvan",
+	["SM_STREKOZA"]    = "strekoza",
+	["SM_SVINYA"]      = "svinya",
+	["SM_TARAKAN"]     = "tarakan",
+	["SM_TARK"]        = "tark",
+	["SM_TEMPLE"]      = "temple",
+	["SM_VEBBER"]      = "vebber",
+	["SM_VENDIGO"]     = "vendigo",
+	["SM_VOLK"]        = "volk",
+	["SM_WATCHMEN"]    = "watchmen",
+	["SM_YOZHIK"]      = "yozhik",
+	["SM_ZANOZA"]      = "zanoza",
+	["SM_ZEDDEV"]      = "zeddev",
+	["SM_ZHABA"]       = "zhaba"
+	
+}
+
+clsid_to_section = {
+	[clsid.bloodsucker_s] 	= "bloodsucker",
+	[clsid.boar_s] 			= "boar",
+	[clsid.burer_s] 		= "burer",
+	[clsid.chimera_s]		= "chimera",
+	[clsid.controller_s]	= "controller",
+	[clsid.dog_s]			= "dog",
+	[clsid.flesh_s]			= "flesh",
+	[clsid.gigant_s]		= "gigant",
+	[clsid.poltergeist_s]	= "poltergeist",
+	[clsid.psy_dog_s]		= "psy_dog",
+	[clsid.psy_dog_phantom_s] = "psy_dog",
+	[clsid.pseudodog_s]		= "pseudodog",
+	[clsid.snork_s]			= "snork",
+	[clsid.tushkano_s]		= "tushkano",
+	[clsid.cat_s]			= "cat",
+	[clsid.fracture_s]		= "fracture",
+	[clsid.zombie_s]		= "zombie",
+	[clsid.crow]			= "crow",
+	[clsid.rat_s]			= "rat"
+}
+
+clsdbg_to_section = {
+	["SM_ALGHOUL"]     = "alghoul",
+	["SM_AMEBA"]       = "ameba",
+	["SM_BAYUN"]       = "bayun",
+	["SM_BONES"]       = "bones",
+	["SM_BURENKA"]     = "burenka",
+	["SM_CLAW"]        = "claw",
+	["SM_DOBERMAN"]	   = "doberman",
+	["SM_DURIEL"]      = "duriel",
+	["SM_FEV"]         = "fev",
+	["SM_FIST"]        = "fist",
+	["SM_GERUDA"]      = "geruda",
+	["SM_GONCHAYA"]    = "gonchaya",
+	["SM_GROTESQUE"]   = "grotesque",
+	["SM_HAYZED"]      = "hayzed",
+	["SM_ISKATEL"]     = "iskatel",
+	["SM_JAW"]         = "jaw",
+	["SM_JUGGER"]      = "jugger",
+	["SM_KANNIBAL"]    = "kannibal",
+	["SM_KARLIK"]      = "karlik",
+	["SM_KOMAR"]       = "komar",
+	["SM_KOYOT"]       = "koyot",
+	["SM_KRISA"]       = "krisa",
+	["SM_LATSERTIAN"]  = "latsertian",
+	["SM_LETALKA"]     = "letalka",
+	["SM_LURKER"]      = "lurker",
+	["SM_FANG"]       = "fang",
+	["SM_MIZGIR"]      = "mizgir",
+	["SM_FUR"]     = "fur",
+	["SM_MUSKUL"]      = "muskul",
+	["SM_OBRAZET"]     = "obrazet",
+	["SM_PREDADAR"]    = "predadar",
+	["SM_PSYSUCKER"]   = "psysucker",
+	["SM_PYAT"]        = "pyat",
+	["SM_ROGACH"]      = "rogach",
+	["SM_SCALES"]      = "scales",
+	["SM_SCUTTLER"]    = "scuttler",
+	["SM_SILVAN"]      = "silvan",
+	["SM_STREKOZA"]    = "strekoza",
+	["SM_SVINYA"]      = "svinya",
+	["SM_TARAKAN"]     = "tarakan",
+	["SM_TARK"]        = "tark",
+	["SM_TEMPLE"]      = "temple",
+	["SM_VEBBER"]      = "vebber",
+	["SM_VENDIGO"]     = "vendigo",
+	["SM_VOLK"]        = "volk",
+	["SM_WATCHMEN"]    = "watchmen",
+	["SM_YOZHIK"]      = "yozhik",
+	["SM_ZANOZA"]      = "zanoza",
+	["SM_ZEDDEV"]      = "zeddev",
+	["SM_ZHABA"]       = "zhaba"
+}
+
+killed_mutant_tbl = { -- ponney68: This table based on "species" of mutants
+
+-- TRX: A-Life Revamp
+    psysucker			= {file="ui\\ui_actor_monsters_pda_3",x="393",y="0",type="small"},
+   	lurker				= {file="ui\\ui_actor_monsters_pda_3",x="0",y="0",type="small"},
+    karlik				= {file="ui\\ui_actor_monsters_pda_3",x="0",y="200",type="small"},
+	
+	alghoul             = {file="ui\\ui_actor_monsters_pda_alghoul", x="0", y="0", type="small"},
+	ameba               = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	bayun               = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	bones               = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	burenka             = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	claw                = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	doberman            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	duriel              = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	fev                 = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	fist                = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	geruda              = {file="ui\\ui_actor_monsters_pda_geruda", x="0", y="0", type="small"},
+	gonchaya            = {file="ui\\ui_actor_monsters_pda_gonchaya", x="0", y="0", type="small"},
+	grotesque           = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	hayzed              = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	iskatel             = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	jaw                 = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	jugger              = {file="ui\\ui_actor_monsters_pda_jugger", x="0", y="0", type="small"},
+	kannibal            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	komar               = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	koyot               = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	krisa               = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	latsertian          = {file="ui\\ui_actor_monsters_pda_latsertian", x="0", y="0", type="small"},
+	letalka             = {file="ui\\ui_actor_monsters_pda_letalka", x="0", y="0", type="small"},
+	mizgir              = {file="ui\\ui_actor_monsters_pda_mizgir", x="0", y="0", type="small"},
+	fang                = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	muskul              = {file="ui\\ui_actor_monsters_pda_muskul", x="0", y="0", type="small"},
+	fur                 = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	obrazet             = {file="ui\\ui_actor_monsters_pda_obrazet", x="0", y="0", type="small"},
+	predadar            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	pyat                = {file="ui\\ui_actor_monsters_pda_pyat", x="0", y="0", type="small"},
+	rogach              = {file="ui\\ui_actor_monsters_pda_rogach", x="0", y="0", type="small"},
+	scales              = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	scuttler            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	silvan              = {file="ui\\ui_actor_monsters_pda_silvan", x="0", y="0", type="small"},
+	strekoza            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	svinya              = {file="ui\\ui_actor_monsters_pda_svinya", x="0", y="0", type="small"},
+	tarakan             = {file="ui\\ui_actor_monsters_pda_tarakan", x="0", y="0", type="small"},
+	tark                = {file="ui\\ui_actor_monsters_pda_tark", x="0", y="0", type="small"},
+	temple              = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	vebber              = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	vendigo             = {file="ui\\ui_actor_monsters_pda_vendigo", x="0", y="0", type="small"},
+	volk                = {file="ui\\ui_actor_monsters_pda_volk", x="0", y="0", type="small"},
+	watchmen            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	yozhik              = {file="ui\\ui_actor_monsters_pda_yozhik", x="0", y="0", type="small"},
+	zanoza              = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	zeddev              = {file="ui\\ui_actor_monsters_pda_zeddev", x="0", y="0", type="small"},
+	zhaba               = {file="ui\\ui_actor_monsters_pda_zhaba", x="0", y="0", type="small"},
+	
+    snork				= {file="ui\\ui_actor_monsters_pda",x="393",y="0",type="small"},
+	dog					= {file="ui\\ui_actor_monsters_pda",x="0",y="800",type="small"},
+	pseudodog			= {file="ui\\ui_actor_monsters_pda",x="393",y="200",type="small"},
+	psy_dog				= {file="ui\\ui_actor_monsters_pda",x="393",y="200",type="small"},
+	poltergeist			= {file="ui\\ui_actor_monsters_pda",x="0",y="400",type="small"},
+	bloodsucker			= {file="ui\\ui_actor_monsters_pda",x="393",y="400",type="human"},
+	controller			= {file="ui\\ui_actor_monsters_pda",x="393",y="800",type="human"},
+	chimera				= {file="ui\\ui_actor_monsters_pda",x="0",y="600",type="large"},
+	tushkano			= {file="ui\\ui_actor_monsters_pda",x="0",y="0",type="small"},
+	rat					= {file="ui\\ui_actor_monsters_pda",x="0",y="0",type="small"},
+	flesh				= {file="ui\\ui_actor_monsters_pda",x="393",y="600",type="large"},
+	rotan				= {file="ui\\ui_actor_monsters_pda",x="0",y="0",type="human"},
+	burer				= {file="ui\\ui_actor_monsters_pda_1",x="0",y="0",type="large"},
+	boar				= {file="ui\\ui_actor_monsters_pda_1",x="393",y="0",type="large"},
+	giant				= {file="ui\\ui_actor_monsters_pda_1",x="0",y="200",type="large"},
+	cat					= {file="ui\\ui_actor_monsters_pda_2",x="0",y="0",type="small"},
+	fracture			= {file="ui\\ui_actor_monsters_pda_2",x="393",y="200",type="human"},
+	bird				= {file="ui\\ui_actor_monsters_pda_2",x="393",y="0",type="small"},
+	zombie				= {file="ui\\ui_actor_monsters_pda_2",x="0",y="200",type="human"},
+	bloodsucker_arena	= {file="ui\\ui_actor_monsters_pda",x="393",y="400",type="human"},
+	burer_arena			= {file="ui\\ui_actor_monsters_pda_1",x="0",y="0",type="large"},
+	pseudodog_arena		= {file="ui\\ui_actor_monsters_pda",x="393",y="200",type="small"},
+	snork_arena			= {file="ui\\ui_actor_monsters_pda",x="393",y="0",type="human"},
+}
+
+function loot_mutant_new(section, clsid, loot_table, npc, dont_create, victim) -- monkey patch for loot_mutant function
+
+	npc = npc or db.actor
+	local clsid = clsid or obj and obj:clsid()
+	local kind = section and ini_sys:r_string_ex(section,"kind") or "unknown"
+	if not (clsid) then
+		return
+	end
+
+	local loot, sec, count, chance
+	local str_explode = str_explode
+	local mutant = clsdbg_to_section[kind] or clsid_to_section[clsid]
+	local possible_items = utils_data.collect_section(ini_mutant, mutant)
+	
+	local sim = alife()
+	local npc_id = npc and npc:id()
+	local npc_pos = npc and npc:position()
+	local npc_lvl_id = npc and npc:level_vertex_id()
+	local npc_game_id = npc and npc:game_vertex_id()
+
+	-- Spawn items on NPC if he looted the mutant
+	for i=1,#possible_items do
+		loot = str_explode(possible_items[i],",")
+		if (loot and loot[1] and loot[2]) then
+			if (not loot[3]) then
+				loot[3] = 1
+			end
+			
+			sec = loot[1]
+			count = tonumber(loot[2])
+			chance = loot[3] or 1
+			
+			for i=1,count do
+				if (math.random() <= tonumber(chance)) then
+					
+					-- In case we don't want to bother with loot table
+					local se_obj
+					if (not dont_create) then
+						se_obj = alife_create_item(sec, npc, get_item_prop_table())
+					end
+					
+					-- Fill loot table if needed
+					if (loot_table) then
+						local sec_d, uses = utils_item.get_defined_uses(sec)
+						if (not loot_table[sec_d]) then
+							loot_table[sec_d] = {}
+						end
+						local c = loot_table[sec_d].count
+						c = c and (c + 1) or 1
+						loot_table[sec_d].count = c
+						if se_obj then
+							loot_table[sec_d][c] = se_obj.id
+						end
+						--printf("loot_mutant")
+
+						--[[
+						if npc and npc:id() ~= AC_ID then
+							se_obj = alife_create_item(sec, npc, item_prop_table)
+						end
+						--]]
+					end
+					
+				end
+			end
+		end
+	end
+	
+	-- Unlock relevant mutant article in guide.
+	if mutant and npc and (npc:id() == AC_ID) then
+		SendScriptCallback("actor_on_interaction", "mutants", nil, mutant)
+	end
+	
+	SendScriptCallback("monster_on_loot_init",victim,loot_table)
+end
+
+local UIML = ui_mutant_loot.UIMutantLoot
+
+function UIML:SetMutantImageNew()
+	local mutant_id = game.translate_string(ini_sys:r_string_ex(self.section,"species") or "")
+	
+	local kind = ini_sys:r_string_ex(self.section,"kind") or "unknown"
+	mutant_id = kind_to_section[kind] or mutant_id
+	
+	--printf("-MUTANT:"..mutant_id)
+
+	local mutant_f = "ui\\ui_actor_monsters_pda_1"
+	local mutant_x = 0
+	local mutant_y = 0
+
+	mutant_f = tostring(killed_mutant_tbl[mutant_id].file)
+	mutant_x = tostring(killed_mutant_tbl[mutant_id].x)
+	mutant_y = tostring(killed_mutant_tbl[mutant_id].y)
+
+	local x1 = mutant_x
+	local y1 = mutant_y
+	local mutant_width = 393
+	local mutant_height = 200
+
+	local x2 = x1 + mutant_width
+	local y2 = y1 + mutant_height
+
+	self.image:InitTexture(tostring(mutant_f))
+	self.image:SetTextureRect(Frect():set(x1,y1,x2,y2))
+	self.image:SetStretchTexture(true)
+end
+
+ui_mutant_loot.loot_mutant = loot_mutant_new
+ui_mutant_loot.UIMutantLoot.SetMutantImage = UIML.SetMutantImageNew
+
+function GetNewMonsterDescription(obj,index,sec,cls) -- monkey-patch for vanilla GetMonsterDescription
+	local sec = obj and obj:section() or sec
+	local cls = obj and obj:clsid() or cls
+	local kind = sec and ini_sys:r_string_ex(sec,"kind") or "NA"
+	
+	if sec and index then
+		local msg = game.translate_string("st_dyn_news_" .. sec .. "_" .. index)
+		if (msg == "st_dyn_news_" .. sec .. "_" .. index) then
+			msg = nil
+		end
+		if msg then
+			return msg
+		elseif not (IsMonster(nil,cls)) then
+			if sec:find("_zombied") then
+				return game.translate_string("st_dyn_news_zombied_" .. index)
+			else
+				return "not a monster"
+			end
+		end
+	end
+	local m_class = {
+		[clsid.bloodsucker_s] 			= "bloodsucker",
+		[clsid.boar_s] 					= "boar",
+		[clsid.burer_s] 				= "burer",
+		[clsid.cat_s] 					= "cat",
+		[clsid.chimera_s] 				= "chimera",
+		[clsid.controller_s] 			= "controller",
+		[clsid.dog_s] 					= "dog",
+		[clsid.flesh_s] 				= "flesh",
+		[clsid.fracture_s] 				= "fracture",
+		[clsid.gigant_s] 				= "gigant",
+		[clsid.poltergeist_s] 			= "poltergeist",
+		[clsid.pseudodog_s] 			= "pseudodog",
+		[clsid.psy_dog_phantom_s] 		= "psy_dog_phantom",
+		[clsid.psy_dog_s] 				= "psy_dog",
+		[clsid.rat_s]					= "rat",
+		[clsid.snork_s] 				= "snork",
+		[clsid.tushkano_s] 				= "tushkano",
+		[clsid.zombie_s] 				= "zombie"
+	}
+	local m_section = {
+		["SM_ALGHOUL"]     = "alghoul",
+		["SM_AMEBA"]       = "ameba",
+		["SM_BAYUN"]       = "bayun",
+		["SM_BONES"]       = "bones",
+		["SM_BURENKA"]     = "burenka",
+		["SM_CLAW"]        = "claw",
+		["SM_DOBERMAN"]	   = "doberman",
+		["SM_DURIEL"]      = "duriel",
+		["SM_FEV"]         = "fev",
+		["SM_FIST"]        = "fist",
+		["SM_GERUDA"]      = "geruda",
+		["SM_GONCHAYA"]    = "gonchaya",
+		["SM_GROTESQUE"]   = "grotesque",
+		["SM_HAYZED"]      = "hayzed",
+		["SM_ISKATEL"]     = "iskatel",
+		["SM_JAW"]         = "jaw",
+		["SM_JUGGER"]      = "jugger",
+		["SM_KANNIBAL"]    = "kannibal",
+		["SM_KARLIK"]      = "karlik",
+		["SM_KOMAR"]       = "komar",
+		["SM_KOYOT"]       = "koyot",
+		["SM_KRISA"]       = "krisa",
+		["SM_LATSERTIAN"]  = "latsertian",
+		["SM_LETALKA"]     = "letalka",
+		["SM_LURKER"]      = "lurker",
+		["SM_FANG"]        = "fang",
+		["SM_MIZGIR"]      = "mizgir",
+		["SM_FUR"]         = "fur",
+		["SM_MUSKUL"]      = "muskul",
+		["SM_OBRAZET"]     = "obrazet",
+		["SM_PREDADAR"]    = "predadar",
+		["SM_PSYSUCKER"]   = "psysucker",
+		["SM_PYAT"]        = "pyat",
+		["SM_ROGACH"]      = "rogach",
+		["SM_SCALES"]      = "scales",
+		["SM_SCUTTLER"]    = "scuttler",
+		["SM_SILVAN"]      = "silvan",
+		["SM_STREKOZA"]    = "strekoza",
+		["SM_SVINYA"]      = "svinya",
+		["SM_TARAKAN"]     = "tarakan",
+		["SM_TARK"]        = "tark",
+		["SM_TEMPLE"]      = "temple",
+		["SM_VEBBER"]      = "vebber",
+		["SM_VENDIGO"]     = "vendigo",
+		["SM_VOLK"]        = "volk",
+		["SM_WATCHMEN"]    = "watchmen",
+		["SM_YOZHIK"]      = "yozhik",
+		["SM_ZANOZA"]      = "zanoza",
+		["SM_ZEDDEV"]      = "zeddev",
+		["SM_ZHABA"]       = "zhaba"
+
+	}
+	
+	if clsid.karlik_s 	 then m_class[clsid.karlik_s] 	 = "karlik" 	end --> CoC 1.5
+	if clsid.psysucker_s then m_class[clsid.psysucker_s] = "psysucker" 	end --> A-Life Revamp
+	if clsid.lurker_s 	 then m_class[clsid.lurker_s] 	 = "lurker" 	end --> A-Life Revamp
+	
+	if (not index) then
+		return m_section[kind] or m_class[cls]
+	end
+		
+	return game.translate_string("st_dyn_news_" .. (m_section[kind] or m_class[cls]) .. "_" .. index) or ""
+end
+
+dynamic_news_helper.GetMonsterDescription = GetNewMonsterDescription

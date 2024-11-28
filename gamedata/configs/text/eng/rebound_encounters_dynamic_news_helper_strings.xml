@@ -1,0 +1,1083 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+
+	<!-- for Dynamic News -->
+
+	<string id="st_dyn_news_geruda_1">
+		<text>a Geruda</text>
+	</string>
+	<string id="st_dyn_news_geruda_2">
+		<text>We were attacked by a Geruda</text>
+	</string>
+	<string id="st_dyn_news_geruda_3">
+		<text>We got jumped by a Geruda</text>
+	</string>
+	<string id="st_dyn_news_geruda_4">
+		<text>We were attacked by Gerudas</text>
+	</string>
+	<string id="st_dyn_news_geruda_5">
+		<text>We got ambushed by Gerudas</text>
+	</string>
+	<string id="st_dyn_news_geruda_6">
+		<text>a pack of Gerudas</text>
+	</string>
+	<string id="st_dyn_news_geruda_7">
+		<text>Gerudas</text>
+	</string>
+
+
+	<string id="st_dyn_news_letalka_1">
+		<text>a Letalka</text>
+	</string>
+	<string id="st_dyn_news_letalka_2">
+		<text>We were attacked by a Letalka</text>
+	</string>
+	<string id="st_dyn_news_letalka_3">
+		<text>We got jumped by a Letalka</text>
+	</string>
+	<string id="st_dyn_news_letalka_4">
+		<text>We were attacked by Letalkas</text>
+	</string>
+	<string id="st_dyn_news_letalka_5">
+		<text>We got ambushed by Letalkas</text>
+	</string>
+	<string id="st_dyn_news_letalka_6">
+		<text>a pack of Letalkas</text>
+	</string>
+	<string id="st_dyn_news_letalka_7">
+		<text>Letalkas</text>
+	</string>
+
+
+	<string id="st_dyn_news_mizgir_1">
+		<text>a Mizgir</text>
+	</string>
+	<string id="st_dyn_news_mizgir_2">
+		<text>We were attacked by a Mizgir</text>
+	</string>
+	<string id="st_dyn_news_mizgir_3">
+		<text>We got jumped by a Mizgir</text>
+	</string>
+	<string id="st_dyn_news_mizgir_4">
+		<text>We were attacked by Mizgirs</text>
+	</string>
+	<string id="st_dyn_news_mizgir_5">
+		<text>We got ambushed by Mizgirs</text>
+	</string>
+	<string id="st_dyn_news_mizgir_6">
+		<text>a pack of Mizgirs</text>
+	</string>
+	<string id="st_dyn_news_mizgir_7">
+		<text>Mizgirs</text>
+	</string>
+
+
+	<string id="st_dyn_news_tarakan_1">
+		<text>a Tarakan</text>
+	</string>
+	<string id="st_dyn_news_tarakan_2">
+		<text>We were attacked by a Tarakan</text>
+	</string>
+	<string id="st_dyn_news_tarakan_3">
+		<text>We got jumped by a Tarakan</text>
+	</string>
+	<string id="st_dyn_news_tarakan_4">
+		<text>We were attacked by Tarakans</text>
+	</string>
+	<string id="st_dyn_news_tarakan_5">
+		<text>We got ambushed by Tarakans</text>
+	</string>
+	<string id="st_dyn_news_tarakan_6">
+		<text>a pack of Tarakans</text>
+	</string>
+	<string id="st_dyn_news_tarakan_7">
+		<text>Tarakans</text>
+	</string>
+
+
+	<string id="st_dyn_news_pyat_1">
+		<text>a Pyat</text>
+	</string>
+	<string id="st_dyn_news_pyat_2">
+		<text>We were attacked by a Pyat</text>
+	</string>
+	<string id="st_dyn_news_pyat_3">
+		<text>We got jumped by a Pyat</text>
+	</string>
+	<string id="st_dyn_news_pyat_4">
+		<text>We were attacked by Pyats</text>
+	</string>
+	<string id="st_dyn_news_pyat_5">
+		<text>We got ambushed by Pyats</text>
+	</string>
+	<string id="st_dyn_news_pyat_6">
+		<text>a pack of Pyats</text>
+	</string>
+	<string id="st_dyn_news_pyat_7">
+		<text>Pyats</text>
+	</string>
+
+
+	<string id="st_dyn_news_ameba_1">
+		<text>An Ameba</text>
+	</string>
+	<string id="st_dyn_news_ameba_2">
+		<text>We were attacked by an Ameba</text>
+	</string>
+	<string id="st_dyn_news_ameba_3">
+		<text>We got jumped by an Ameba</text>
+	</string>
+	<string id="st_dyn_news_ameba_4">
+		<text>We were attacked by Amebas</text>
+	</string>
+	<string id="st_dyn_news_ameba_5">
+		<text>We got ambushed by Amebas</text>
+	</string>
+	<string id="st_dyn_news_ameba_6">
+		<text>a pack of Amebas</text>
+	</string>
+	<string id="st_dyn_news_ameba_7">
+		<text>Amebas</text>
+	</string>
+
+
+	<string id="st_dyn_news_hayzed_1">
+		<text>a Hayzed</text>
+	</string>
+	<string id="st_dyn_news_hayzed_2">
+		<text>We were attacked by a Hayzed</text>
+	</string>
+	<string id="st_dyn_news_hayzed_3">
+		<text>We got jumped by a Hayzed</text>
+	</string>
+	<string id="st_dyn_news_hayzed_4">
+		<text>We were attacked by Hayzeds</text>
+	</string>
+	<string id="st_dyn_news_hayzed_5">
+		<text>We got ambushed by Hayzeds</text>
+	</string>
+	<string id="st_dyn_news_hayzed_6">
+		<text>a pack of Hayzeds</text>
+	</string>
+	<string id="st_dyn_news_hayzed_7">
+		<text>Hayzeds</text>
+	</string>
+
+
+	<string id="st_dyn_news_krisa_1">
+		<text>a Krisa</text>
+	</string>
+	<string id="st_dyn_news_krisa_2">
+		<text>We were attacked by a Krisa</text>
+	</string>
+	<string id="st_dyn_news_krisa_3">
+		<text>We got jumped by a Krisa</text>
+	</string>
+	<string id="st_dyn_news_krisa_4">
+		<text>We were attacked by Krisas</text>
+	</string>
+	<string id="st_dyn_news_krisa_5">
+		<text>We got ambushed by Krisas</text>
+	</string>
+	<string id="st_dyn_news_krisa_6">
+		<text>a pack of Krisas</text>
+	</string>
+	<string id="st_dyn_news_krisa_7">
+		<text>Krisas</text>
+	</string>
+
+
+	<string id="st_dyn_news_strekoza_1">
+		<text>a Strekoza</text>
+	</string>
+	<string id="st_dyn_news_strekoza_2">
+		<text>We were attacked by a Strekoza</text>
+	</string>
+	<string id="st_dyn_news_strekoza_3">
+		<text>We got jumped by a Strekoza</text>
+	</string>
+	<string id="st_dyn_news_strekoza_4">
+		<text>We were attacked by Strekozas</text>
+	</string>
+	<string id="st_dyn_news_strekoza_5">
+		<text>We got ambushed by Strekozas</text>
+	</string>
+	<string id="st_dyn_news_strekoza_6">
+		<text>a pack of Strekozas</text>
+	</string>
+	<string id="st_dyn_news_strekoza_7">
+		<text>Strekozas</text>
+	</string>
+
+
+	<string id="st_dyn_news_vebber_1">
+		<text>a Vebber</text>
+	</string>
+	<string id="st_dyn_news_vebber_2">
+		<text>We were attacked by a Vebber</text>
+	</string>
+	<string id="st_dyn_news_vebber_3">
+		<text>We got jumped by a Vebber</text>
+	</string>
+	<string id="st_dyn_news_vebber_4">
+		<text>We were attacked by Vebbers</text>
+	</string>
+	<string id="st_dyn_news_vebber_5">
+		<text>We got ambushed by Vebbers</text>
+	</string>
+	<string id="st_dyn_news_vebber_6">
+		<text>a pack of Vebbers</text>
+	</string>
+	<string id="st_dyn_news_vebber_7">
+		<text>Vebbers</text>
+	</string>
+
+
+	<string id="st_dyn_news_doberman_1">
+		<text>a Doberman</text>
+	</string>
+	<string id="st_dyn_news_doberman_2">
+		<text>We were attacked by a Doberman</text>
+	</string>
+	<string id="st_dyn_news_doberman_3">
+		<text>We got jumped by a Doberman</text>
+	</string>
+	<string id="st_dyn_news_doberman_4">
+		<text>We were attacked by Dobermans</text>
+	</string>
+	<string id="st_dyn_news_doberman_5">
+		<text>We got ambushed by Dobermans</text>
+	</string>
+	<string id="st_dyn_news_doberman_6">
+		<text>a pack of Dobermans</text>
+	</string>
+	<string id="st_dyn_news_doberman_7">
+		<text>Dobermans</text>
+	</string>
+
+
+	<string id="st_dyn_news_komar_1">
+		<text>a Komar</text>
+	</string>
+	<string id="st_dyn_news_komar_2">
+		<text>We were attacked by a Komar</text>
+	</string>
+	<string id="st_dyn_news_komar_3">
+		<text>We got jumped by a Komar</text>
+	</string>
+	<string id="st_dyn_news_komar_4">
+		<text>We were attacked by Komars</text>
+	</string>
+	<string id="st_dyn_news_komar_5">
+		<text>We got ambushed by Komars</text>
+	</string>
+	<string id="st_dyn_news_komar_6">
+		<text>a pack of Komars</text>
+	</string>
+	<string id="st_dyn_news_komar_7">
+		<text>Komars</text>
+	</string>
+
+
+	<string id="st_dyn_news_jugger_1">
+		<text>a Jugger</text>
+	</string>
+	<string id="st_dyn_news_jugger_2">
+		<text>We were attacked by a Jugger</text>
+	</string>
+	<string id="st_dyn_news_jugger_3">
+		<text>We got jumped by a Jugger</text>
+	</string>
+	<string id="st_dyn_news_jugger_4">
+		<text>We were attacked by Juggers</text>
+	</string>
+	<string id="st_dyn_news_jugger_5">
+		<text>We got ambushed by Juggers</text>
+	</string>
+	<string id="st_dyn_news_jugger_6">
+		<text>a pack of Juggers</text>
+	</string>
+	<string id="st_dyn_news_jugger_7">
+		<text>Juggers</text>
+	</string>
+
+
+	<string id="st_dyn_news_obrazet_1">
+		<text>An Obrazet</text>
+	</string>
+	<string id="st_dyn_news_obrazet_2">
+		<text>We were attacked by an Obrazet</text>
+	</string>
+	<string id="st_dyn_news_obrazet_3">
+		<text>We got jumped by an Obrazet</text>
+	</string>
+	<string id="st_dyn_news_obrazet_4">
+		<text>We were attacked by Obrazets</text>
+	</string>
+	<string id="st_dyn_news_obrazet_5">
+		<text>We got ambushed by Obrazets</text>
+	</string>
+	<string id="st_dyn_news_obrazet_6">
+		<text>a pack of Obrazets</text>
+	</string>
+	<string id="st_dyn_news_obrazet_7">
+		<text>Obrazets</text>
+	</string>
+
+
+	<string id="st_dyn_news_rogach_1">
+		<text>a Rogach</text>
+	</string>
+	<string id="st_dyn_news_rogach_2">
+		<text>We were attacked by a Rogach</text>
+	</string>
+	<string id="st_dyn_news_rogach_3">
+		<text>We got jumped by a Rogach</text>
+	</string>
+	<string id="st_dyn_news_rogach_4">
+		<text>We were attacked by Rogachs</text>
+	</string>
+	<string id="st_dyn_news_rogach_5">
+		<text>We got ambushed by Rogachs</text>
+	</string>
+	<string id="st_dyn_news_rogach_6">
+		<text>a pack of Rogachs</text>
+	</string>
+	<string id="st_dyn_news_rogach_7">
+		<text>Rogachs</text>
+	</string>
+
+
+	<string id="st_dyn_news_silvan_1">
+		<text>a Silvan</text>
+	</string>
+	<string id="st_dyn_news_silvan_2">
+		<text>We were attacked by a Silvan</text>
+	</string>
+	<string id="st_dyn_news_silvan_3">
+		<text>We got jumped by a Silvan</text>
+	</string>
+	<string id="st_dyn_news_silvan_4">
+		<text>We were attacked by Silvans</text>
+	</string>
+	<string id="st_dyn_news_silvan_5">
+		<text>We got ambushed by Silvans</text>
+	</string>
+	<string id="st_dyn_news_silvan_6">
+		<text>a pack of Silvans</text>
+	</string>
+	<string id="st_dyn_news_silvan_7">
+		<text>Silvans</text>
+	</string>
+
+
+	<string id="st_dyn_news_volk_1">
+		<text>a Volk</text>
+	</string>
+	<string id="st_dyn_news_volk_2">
+		<text>We were attacked by a Volk</text>
+	</string>
+	<string id="st_dyn_news_volk_3">
+		<text>We got jumped by a Volk</text>
+	</string>
+	<string id="st_dyn_news_volk_4">
+		<text>We were attacked by Volks</text>
+	</string>
+	<string id="st_dyn_news_volk_5">
+		<text>We got ambushed by Volks</text>
+	</string>
+	<string id="st_dyn_news_volk_6">
+		<text>a pack of Volks</text>
+	</string>
+	<string id="st_dyn_news_volk_7">
+		<text>Volks</text>
+	</string>
+
+
+	<string id="st_dyn_news_zhaba_1">
+		<text>a Zhaba</text>
+	</string>
+	<string id="st_dyn_news_zhaba_2">
+		<text>We were attacked by a Zhaba</text>
+	</string>
+	<string id="st_dyn_news_zhaba_3">
+		<text>We got jumped by a Zhaba</text>
+	</string>
+	<string id="st_dyn_news_zhaba_4">
+		<text>We were attacked by Zhabas</text>
+	</string>
+	<string id="st_dyn_news_zhaba_5">
+		<text>We got ambushed by Zhabas</text>
+	</string>
+	<string id="st_dyn_news_zhaba_6">
+		<text>a pack of Zhabas</text>
+	</string>
+	<string id="st_dyn_news_zhaba_7">
+		<text>Zhabas</text>
+	</string>
+
+
+	<string id="st_dyn_news_gonchaya_1">
+		<text>a Gonchaya</text>
+	</string>
+	<string id="st_dyn_news_gonchaya_2">
+		<text>We were attacked by a Gonchaya</text>
+	</string>
+	<string id="st_dyn_news_gonchaya_3">
+		<text>We got jumped by a Gonchaya</text>
+	</string>
+	<string id="st_dyn_news_gonchaya_4">
+		<text>We were attacked by Gonchayas</text>
+	</string>
+	<string id="st_dyn_news_gonchaya_5">
+		<text>We got ambushed by Gonchayas</text>
+	</string>
+	<string id="st_dyn_news_gonchaya_6">
+		<text>a pack of Gonchayas</text>
+	</string>
+	<string id="st_dyn_news_gonchaya_7">
+		<text>Gonchayas</text>
+	</string>
+
+
+	<string id="st_dyn_news_muskul_1">
+		<text>a Muskul</text>
+	</string>
+	<string id="st_dyn_news_muskul_2">
+		<text>We were attacked by a Muskul</text>
+	</string>
+	<string id="st_dyn_news_muskul_3">
+		<text>We got jumped by a Muskul</text>
+	</string>
+	<string id="st_dyn_news_muskul_4">
+		<text>We were attacked by Muskuls</text>
+	</string>
+	<string id="st_dyn_news_muskul_5">
+		<text>We got ambushed by Muskuls</text>
+	</string>
+	<string id="st_dyn_news_muskul_6">
+		<text>a pack of Muskuls</text>
+	</string>
+	<string id="st_dyn_news_muskul_7">
+		<text>Muskuls</text>
+	</string>
+
+
+	<string id="st_dyn_news_svinya_1">
+		<text>a Svinya</text>
+	</string>
+	<string id="st_dyn_news_svinya_2">
+		<text>We were attacked by a Svinya</text>
+	</string>
+	<string id="st_dyn_news_svinya_3">
+		<text>We got jumped by a Svinya</text>
+	</string>
+	<string id="st_dyn_news_svinya_4">
+		<text>We were attacked by Svinyas</text>
+	</string>
+	<string id="st_dyn_news_svinya_5">
+		<text>We got ambushed by Svinyas</text>
+	</string>
+	<string id="st_dyn_news_svinya_6">
+		<text>a pack of Svinyas</text>
+	</string>
+	<string id="st_dyn_news_svinya_7">
+		<text>Svinyas</text>
+	</string>
+
+
+	<string id="st_dyn_news_tark_1">
+		<text>a Tark</text>
+	</string>
+	<string id="st_dyn_news_tark_2">
+		<text>We were attacked by a Tark</text>
+	</string>
+	<string id="st_dyn_news_tark_3">
+		<text>We got jumped by a Tark</text>
+	</string>
+	<string id="st_dyn_news_tark_4">
+		<text>We were attacked by Tarks</text>
+	</string>
+	<string id="st_dyn_news_tark_5">
+		<text>We got ambushed by Tarks</text>
+	</string>
+	<string id="st_dyn_news_tark_6">
+		<text>a pack of Tarks</text>
+	</string>
+	<string id="st_dyn_news_tark_7">
+		<text>Tarks</text>
+	</string>
+
+
+	<string id="st_dyn_news_zeddev_1">
+		<text>a Zeddev</text>
+	</string>
+	<string id="st_dyn_news_zeddev_2">
+		<text>We were attacked by a Zeddev</text>
+	</string>
+	<string id="st_dyn_news_zeddev_3">
+		<text>We got jumped by a Zeddev</text>
+	</string>
+	<string id="st_dyn_news_zeddev_4">
+		<text>We were attacked by Zeddevs</text>
+	</string>
+	<string id="st_dyn_news_zeddev_5">
+		<text>We got ambushed by Zeddevs</text>
+	</string>
+	<string id="st_dyn_news_zeddev_6">
+		<text>a pack of Zeddevs</text>
+	</string>
+	<string id="st_dyn_news_zeddev_7">
+		<text>Zeddevs</text>
+	</string>
+
+
+	<string id="st_dyn_news_burenka_1">
+		<text>a Burenka</text>
+	</string>
+	<string id="st_dyn_news_burenka_2">
+		<text>We were attacked by a Burenka</text>
+	</string>
+	<string id="st_dyn_news_burenka_3">
+		<text>We got jumped by a Burenka</text>
+	</string>
+	<string id="st_dyn_news_burenka_4">
+		<text>We were attacked by Burenkas</text>
+	</string>
+	<string id="st_dyn_news_burenka_5">
+		<text>We got ambushed by Burenkas</text>
+	</string>
+	<string id="st_dyn_news_burenka_6">
+		<text>a pack of Burenkas</text>
+	</string>
+	<string id="st_dyn_news_burenka_7">
+		<text>Burenkas</text>
+	</string>
+
+
+	<string id="st_dyn_news_duriel_1">
+		<text>a Duriel</text>
+	</string>
+	<string id="st_dyn_news_duriel_2">
+		<text>We were attacked by a Duriel</text>
+	</string>
+	<string id="st_dyn_news_duriel_3">
+		<text>We got jumped by a Duriel</text>
+	</string>
+	<string id="st_dyn_news_duriel_4">
+		<text>We were attacked by Duriels</text>
+	</string>
+	<string id="st_dyn_news_duriel_5">
+		<text>We got ambushed by Duriels</text>
+	</string>
+	<string id="st_dyn_news_duriel_6">
+		<text>a pack of Duriels</text>
+	</string>
+	<string id="st_dyn_news_duriel_7">
+		<text>Duriels</text>
+	</string>
+
+
+	<string id="st_dyn_news_kannibal_1">
+		<text>a Kannibal</text>
+	</string>
+	<string id="st_dyn_news_kannibal_2">
+		<text>We were attacked by a Kannibal</text>
+	</string>
+	<string id="st_dyn_news_kannibal_3">
+		<text>We got jumped by a Kannibal</text>
+	</string>
+	<string id="st_dyn_news_kannibal_4">
+		<text>We were attacked by Kannibals</text>
+	</string>
+	<string id="st_dyn_news_kannibal_5">
+		<text>We got ambushed by Kannibals</text>
+	</string>
+	<string id="st_dyn_news_kannibal_6">
+		<text>a pack of Kannibals</text>
+	</string>
+	<string id="st_dyn_news_kannibal_7">
+		<text>Kannibals</text>
+	</string>
+
+
+	<string id="st_dyn_news_predadar_1">
+		<text>a Predadar</text>
+	</string>
+	<string id="st_dyn_news_predadar_2">
+		<text>We were attacked by a Predadar</text>
+	</string>
+	<string id="st_dyn_news_predadar_3">
+		<text>We got jumped by a Predadar</text>
+	</string>
+	<string id="st_dyn_news_predadar_4">
+		<text>We were attacked by Predadars</text>
+	</string>
+	<string id="st_dyn_news_predadar_5">
+		<text>We got ambushed by Predadars</text>
+	</string>
+	<string id="st_dyn_news_predadar_6">
+		<text>a pack of Predadars</text>
+	</string>
+	<string id="st_dyn_news_predadar_7">
+		<text>Predadars</text>
+	</string>
+
+
+	<string id="st_dyn_news_zanoza_1">
+		<text>a Zanoza</text>
+	</string>
+	<string id="st_dyn_news_zanoza_2">
+		<text>We were attacked by a Zanoza</text>
+	</string>
+	<string id="st_dyn_news_zanoza_3">
+		<text>We got jumped by a Zanoza</text>
+	</string>
+	<string id="st_dyn_news_zanoza_4">
+		<text>We were attacked by Zanozas</text>
+	</string>
+	<string id="st_dyn_news_zanoza_5">
+		<text>We got ambushed by Zanozas</text>
+	</string>
+	<string id="st_dyn_news_zanoza_6">
+		<text>a pack of Zanozas</text>
+	</string>
+	<string id="st_dyn_news_zanoza_7">
+		<text>Zanozas</text>
+	</string>
+
+
+	<string id="st_dyn_news_iskatel_1">
+		<text>An Iskatels</text>
+	</string>
+	<string id="st_dyn_news_iskatel_2">
+		<text>We were attacked by an Iskatels</text>
+	</string>
+	<string id="st_dyn_news_iskatel_3">
+		<text>We got jumped by an Iskatels</text>
+	</string>
+	<string id="st_dyn_news_iskatel_4">
+		<text>We were attacked by Iskatels</text>
+	</string>
+	<string id="st_dyn_news_iskatel_5">
+		<text>We got ambushed by Iskatels</text>
+	</string>
+	<string id="st_dyn_news_iskatel_6">
+		<text>a pack of Iskatels</text>
+	</string>
+	<string id="st_dyn_news_iskatel_7">
+		<text>Iskatels</text>
+	</string>
+
+
+	<string id="st_dyn_news_bayun_1">
+		<text>a Bayun</text>
+	</string>
+	<string id="st_dyn_news_bayun_2">
+		<text>We were attacked by a Bayun</text>
+	</string>
+	<string id="st_dyn_news_bayun_3">
+		<text>We got jumped by a Bayun</text>
+	</string>
+	<string id="st_dyn_news_bayun_4">
+		<text>We were attacked by Bayuns</text>
+	</string>
+	<string id="st_dyn_news_bayun_5">
+		<text>We got ambushed by Bayuns</text>
+	</string>
+	<string id="st_dyn_news_bayun_6">
+		<text>a pack of Bayuns</text>
+	</string>
+	<string id="st_dyn_news_bayun_7">
+		<text>Bayuns</text>
+	</string>
+
+
+	<string id="st_dyn_news_koyot_1">
+		<text>a Koyot</text>
+	</string>
+	<string id="st_dyn_news_koyot_2">
+		<text>We were attacked by a Koyot</text>
+	</string>
+	<string id="st_dyn_news_koyot_3">
+		<text>We got jumped by a Koyot</text>
+	</string>
+	<string id="st_dyn_news_koyot_4">
+		<text>We were attacked by Koyots</text>
+	</string>
+	<string id="st_dyn_news_koyot_5">
+		<text>We got ambushed by Koyots</text>
+	</string>
+	<string id="st_dyn_news_koyot_6">
+		<text>a pack of Koyots</text>
+	</string>
+	<string id="st_dyn_news_koyot_7">
+		<text>Koyots</text>
+	</string>
+
+
+	<string id="st_dyn_news_latsertian_1">
+		<text>a Latsertian</text>
+	</string>
+	<string id="st_dyn_news_latsertian_2">
+		<text>We were attacked by a Latsertian</text>
+	</string>
+	<string id="st_dyn_news_latsertian_3">
+		<text>We got jumped by a Latsertian</text>
+	</string>
+	<string id="st_dyn_news_latsertian_4">
+		<text>We were attacked by Latsertians</text>
+	</string>
+	<string id="st_dyn_news_latsertian_5">
+		<text>We got ambushed by Latsertians</text>
+	</string>
+	<string id="st_dyn_news_latsertian_6">
+		<text>a pack of Latsertians</text>
+	</string>
+	<string id="st_dyn_news_latsertian_7">
+		<text>Latsertians</text>
+	</string>
+
+
+	<string id="st_dyn_news_alghoul_1">
+		<text>An Alghoul</text>
+	</string>
+	<string id="st_dyn_news_alghoul_2">
+		<text>We were attacked by Alghouls</text>
+	</string>
+	<string id="st_dyn_news_alghoul_5">
+		<text>We got ambushed by Alghouls</text>
+	</string>
+	<string id="st_dyn_news_alghoul_6">
+		<text>a pack of Alghouls</text>
+	</string>
+	<string id="st_dyn_news_alghoul_7">
+		<text>Alghouls</text>
+	</string>
+
+
+	<string id="st_dyn_news_vendigo_1">
+		<text>a Vendigo</text>
+	</string>
+	<string id="st_dyn_news_vendigo_2">
+		<text>We were attacked by a Vendigo</text>
+	</string>
+	<string id="st_dyn_news_vendigo_3">
+		<text>We got jumped by a Vendigo</text>
+	</string>
+	<string id="st_dyn_news_vendigo_4">
+		<text>We were attacked by Vendigos</text>
+	</string>
+	<string id="st_dyn_news_vendigo_5">
+		<text>We got ambushed by Vendigos</text>
+	</string>
+	<string id="st_dyn_news_vendigo_6">
+		<text>a pack of Vendigos</text>
+	</string>
+	<string id="st_dyn_news_vendigo_7">
+		<text>Vendigoes</text>
+	</string>
+
+
+	<string id="st_dyn_news_yozhik_1">
+		<text>a Yozhik</text>
+	</string>
+	<string id="st_dyn_news_yozhik_2">
+		<text>We were attacked by a Yozhik</text>
+	</string>
+	<string id="st_dyn_news_yozhik_3">
+		<text>We got jumped by a Yozhik</text>
+	</string>
+	<string id="st_dyn_news_yozhik_4">
+		<text>We were attacked by Yozhiks</text>
+	</string>
+	<string id="st_dyn_news_yozhik_5">
+		<text>We got ambushed by Yozhiks</text>
+	</string>
+	<string id="st_dyn_news_yozhik_6">
+		<text>a pack of Yozhiks</text>
+	</string>
+	<string id="st_dyn_news_yozhik_7">
+		<text>Yozhiks</text>
+	</string>
+
+
+	<string id="st_dyn_news_watchmen_1">
+		<text>a Watchmen</text>
+	</string>
+	<string id="st_dyn_news_watchmen_2">
+		<text>We were attacked by a Watchmen</text>
+	</string>
+	<string id="st_dyn_news_watchmen_3">
+		<text>We got jumped by a Watchmen</text>
+	</string>
+	<string id="st_dyn_news_watchmen_4">
+		<text>We were attacked by Watchmen</text>
+	</string>
+	<string id="st_dyn_news_watchmen_5">
+		<text>We got ambushed by Watchmen</text>
+	</string>
+	<string id="st_dyn_news_watchmen_6">
+		<text>a pack of Watchmen</text>
+	</string>
+	<string id="st_dyn_news_watchmen_7">
+		<text>Watchmen</text>
+	</string>
+
+
+	<string id="st_dyn_news_bones_1">
+		<text>a Bones</text>
+	</string>
+	<string id="st_dyn_news_bones_2">
+		<text>We were attacked by a Bones</text>
+	</string>
+	<string id="st_dyn_news_bones_3">
+		<text>We got jumped by a Bones</text>
+	</string>
+	<string id="st_dyn_news_bones_4">
+		<text>We were attacked by Bones</text>
+	</string>
+	<string id="st_dyn_news_bones_5">
+		<text>We got ambushed by Bones</text>
+	</string>
+	<string id="st_dyn_news_bones_6">
+		<text>a pack of Bones</text>
+	</string>
+	<string id="st_dyn_news_bones_7">
+		<text>Bones</text>
+	</string>
+
+
+	<string id="st_dyn_news_fev_1">
+		<text>a Fev</text>
+	</string>
+	<string id="st_dyn_news_fev_2">
+		<text>We were attacked by a Fev</text>
+	</string>
+	<string id="st_dyn_news_fev_3">
+		<text>We got jumped by a Fev</text>
+	</string>
+	<string id="st_dyn_news_fev_4">
+		<text>We were attacked by Fevs</text>
+	</string>
+	<string id="st_dyn_news_fev_5">
+		<text>We got ambushed by Fevs</text>
+	</string>
+	<string id="st_dyn_news_fev_6">
+		<text>a pack of Fevs</text>
+	</string>
+	<string id="st_dyn_news_fev_7">
+		<text>Fevs</text>
+	</string>
+
+
+	<string id="st_dyn_news_claw_1">
+		<text>a Claw</text>
+	</string>
+	<string id="st_dyn_news_claw_2">
+		<text>We were attacked by a Claw</text>
+	</string>
+	<string id="st_dyn_news_claw_3">
+		<text>We got jumped by a Claw</text>
+	</string>
+	<string id="st_dyn_news_claw_4">
+		<text>We were attacked by Claws</text>
+	</string>
+	<string id="st_dyn_news_claw_5">
+		<text>We got ambushed by Claws</text>
+	</string>
+	<string id="st_dyn_news_claw_6">
+		<text>a pack of Claws</text>
+	</string>
+	<string id="st_dyn_news_claw_7">
+		<text>Claws</text>
+	</string>
+
+
+	<string id="st_dyn_news_fist_1">
+		<text>a Fist</text>
+	</string>
+	<string id="st_dyn_news_fist_2">
+		<text>We were attacked by a Fist</text>
+	</string>
+	<string id="st_dyn_news_fist_3">
+		<text>We got jumped by a Fist</text>
+	</string>
+	<string id="st_dyn_news_fist_4">
+		<text>We were attacked by Fists</text>
+	</string>
+	<string id="st_dyn_news_fist_5">
+		<text>We got ambushed by Fists</text>
+	</string>
+	<string id="st_dyn_news_fist_6">
+		<text>a pack of Fists</text>
+	</string>
+	<string id="st_dyn_news_fist_7">
+		<text>Fists</text>
+	</string>
+
+
+	<string id="st_dyn_news_jaw_1">
+		<text>a Jaw</text>
+	</string>
+	<string id="st_dyn_news_jaw_2">
+		<text>We were attacked by a Jaw</text>
+	</string>
+	<string id="st_dyn_news_jaw_3">
+		<text>We got jumped by a Jaw</text>
+	</string>
+	<string id="st_dyn_news_jaw_4">
+		<text>We were attacked by Jaws</text>
+	</string>
+	<string id="st_dyn_news_jaw_5">
+		<text>We got ambushed by Jaws</text>
+	</string>
+	<string id="st_dyn_news_jaw_6">
+		<text>a pack of Jaws</text>
+	</string>
+	<string id="st_dyn_news_jaw_7">
+		<text>Jaws</text>
+	</string>
+
+
+	<string id="st_dyn_news_scales_1">
+		<text>a Scales</text>
+	</string>
+	<string id="st_dyn_news_scales_2">
+		<text>We were attacked by a Scales</text>
+	</string>
+	<string id="st_dyn_news_scales_3">
+		<text>We got jumped by a Scales</text>
+	</string>
+	<string id="st_dyn_news_scales_4">
+		<text>We were attacked by Scales</text>
+	</string>
+	<string id="st_dyn_news_scales_5">
+		<text>We got ambushed by Scales</text>
+	</string>
+	<string id="st_dyn_news_scales_6">
+		<text>a pack of Scales</text>
+	</string>
+	<string id="st_dyn_news_scales_7">
+		<text>Scales</text>
+	</string>
+
+
+	<string id="st_dyn_news_scuttler_1">
+		<text>a Scuttler</text>
+	</string>
+	<string id="st_dyn_news_scuttler_2">
+		<text>We were attacked by a Scuttler</text>
+	</string>
+	<string id="st_dyn_news_scuttler_3">
+		<text>We got jumped by a Scuttler</text>
+	</string>
+	<string id="st_dyn_news_scuttler_4">
+		<text>We were attacked by Scuttlers</text>
+	</string>
+	<string id="st_dyn_news_scuttler_5">
+		<text>We got ambushed by Scuttlers</text>
+	</string>
+	<string id="st_dyn_news_scuttler_6">
+		<text>a pack of Scuttlers</text>
+	</string>
+	<string id="st_dyn_news_scuttler_7">
+		<text>Scuttlers</text>
+	</string>
+
+
+	<string id="st_dyn_news_temple_1">
+		<text>a Temple</text>
+	</string>
+	<string id="st_dyn_news_temple_2">
+		<text>We were attacked by a Temple</text>
+	</string>
+	<string id="st_dyn_news_temple_3">
+		<text>We got jumped by a Temple</text>
+	</string>
+	<string id="st_dyn_news_temple_4">
+		<text>We were attacked by Temples</text>
+	</string>
+	<string id="st_dyn_news_temple_5">
+		<text>We got ambushed by Temples</text>
+	</string>
+	<string id="st_dyn_news_temple_6">
+		<text>a pack of Temples</text>
+	</string>
+	<string id="st_dyn_news_temple_7">
+		<text>Temples</text>
+	</string>
+
+
+	<string id="st_dyn_news_fur_1">
+		<text>a Fur</text>
+	</string>
+	<string id="st_dyn_news_fur_2">
+		<text>We were attacked by a Fur</text>
+	</string>
+	<string id="st_dyn_news_fur_3">
+		<text>We got jumped by a Fur</text>
+	</string>
+	<string id="st_dyn_news_fur_4">
+		<text>We were attacked by Furs</text>
+	</string>
+	<string id="st_dyn_news_fur_5">
+		<text>We got ambushed by Furs</text>
+	</string>
+	<string id="st_dyn_news_fur_6">
+		<text>a pack of Furs</text>
+	</string>
+	<string id="st_dyn_news_fur_7">
+		<text>Furs</text>
+	</string>
+
+
+	<string id="st_dyn_news_grotesque_1">
+		<text>a Grotesque</text>
+	</string>
+	<string id="st_dyn_news_grotesque_2">
+		<text>We were attacked by a Grotesque</text>
+	</string>
+	<string id="st_dyn_news_grotesque_3">
+		<text>We got jumped by a Grotesque</text>
+	</string>
+	<string id="st_dyn_news_grotesque_4">
+		<text>We were attacked by Grotesques</text>
+	</string>
+	<string id="st_dyn_news_grotesque_5">
+		<text>We got ambushed by Grotesques</text>
+	</string>
+	<string id="st_dyn_news_grotesque_6">
+		<text>a pack of Grotesques</text>
+	</string>
+	<string id="st_dyn_news_grotesque_7">
+		<text>Grotesques</text>
+	</string>
+
+
+	<string id="st_dyn_news_fang_1">
+		<text>a Fang</text>
+	</string>
+	<string id="st_dyn_news_fang_2">
+		<text>We were attacked by a Fang</text>
+	</string>
+	<string id="st_dyn_news_fang_3">
+		<text>We got jumped by a Fang</text>
+	</string>
+	<string id="st_dyn_news_fang_4">
+		<text>We were attacked by Fangs</text>
+	</string>
+	<string id="st_dyn_news_fang_5">
+		<text>We got ambushed by Fangs</text>
+	</string>
+	<string id="st_dyn_news_fang_6">
+		<text>a pack of Fangs</text>
+	</string>
+	<string id="st_dyn_news_fang_7">
+		<text>Fangs</text>
+	</string>
+
+	
+
+</string_table>
