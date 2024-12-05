@@ -48,12 +48,15 @@ local ray_count_circle = 16
 local ray_count_vertical = 8
 local actor_in_safe_zone = true
 local actor_is_indoors = true
+local is_safe_zone = false
+
 
 -- time management
 local xspawn_time = nil
 local ctime_to_t = utils_data.CTime_to_table
 local t_to_ctime = utils_data.CTime_from_table
 local tmr
+local marked_time = nil -- Initialize marked_time
 
 -- Define a timer variable and a delay duration
 local monster_hit_timer = 0
@@ -366,8 +369,15 @@ function spawn_mutants()
                                 pr("Warning: Unable to send message, db.actor is nil")
                             end
                         else
-                            local actor_rank_value = get_rank_value(db.actor:character_rank())
-                            add_squad_members(squad, actor_rank_value)
+                            local actor_rank_value = get_rank_value(db.actor:character_rank()) -- rank value
+                            local squad_size_by_level = tonumber(read_ltx_section(plugin_file_name, "squad_size_by_level", level.name()))
+                            if squad:section_name() == "respawn_hayzed" then
+                                add_squad_members(squad, squad_size_by_level)
+                            else
+                                if squad:npc_count() < actor_rank_value then
+                                    add_squad_members(squad, actor_rank_value)
+                                end
+                            end
                         end
 
                         -- Set has_spawned to true and exit loops to stop further spawning attempts
@@ -381,36 +391,38 @@ function spawn_mutants()
     end
 end
 
-function add_squad_members(squad, number_to_add)
-    local half_value = number_to_add / 2
-    local whole_value = math.floor(half_value)
-    local max_squad_count = math.random(1, whole_value)
+function add_squad_members(squad, max_squad_size)
+    local max_squad_count
+    local squad_count = squad:npc_count()
+    max_squad_count = math.random(squad_count, max_squad_size)
+    pr("-- RE:Bound changed squad size of %s from  %s to %s", squad:section_name(), tostring(squad_count), tostring(max_squad_count))
+    local commander = alife_object(squad:commander_id())
+    if commander then
+        while squad:npc_count() < max_squad_count do
 
-    while squad:npc_count() < max_squad_count do
+            local pos = commander.position
+            local lvid = commander.m_level_vertex_id
+            local gvid = commander.m_game_vertex_id
 
-        local commander = alife_object(squad:commander_id())
-        local pos = commander.position
-        local lvid = commander.m_level_vertex_id
-        local gvid = commander.m_game_vertex_id
+            local squad_smart = squad.smart_id and SIMBOARD.smarts[squad.smart_id].smrt
+            if not squad_smart then return end
 
-        local squad_smart = squad.smart_id and SIMBOARD.smarts[squad.smart_id].smrt
-        if not squad_smart then return end
+            local random_spawn = ini_sys:r_string_ex(squad:section_name(), "npc_random")
+            if not random_spawn then return end
 
-        local random_spawn = ini_sys:r_string_ex(squad:section_name(), "npc_random")
-        if not random_spawn then return end
+            random_spawn = parse_names(random_spawn)
+            local random_sec = random_spawn[math.random(1, #random_spawn)]
 
-        random_spawn = parse_names(random_spawn)
-        local random_sec = random_spawn[math.random(1, #random_spawn)]
+            local new_member_id = squad:add_squad_member(random_sec, pos, lvid, gvid)
+            local se_obj = new_member_id and alife_object(new_member_id)
+            if se_obj then
+                squad_smart:register_npc(se_obj)
+                SIMBOARD:setup_squad_and_group(se_obj)
+            end
 
-        local new_member_id = squad:add_squad_member(random_sec, pos, lvid, gvid)
-        local se_obj = new_member_id and alife_object(new_member_id)
-        if se_obj then
-            squad_smart:register_npc(se_obj)
-            SIMBOARD:setup_squad_and_group(se_obj)
+            -- Update the squad
+            squad:update()
         end
-
-        -- Update the squad
-        squad:update()
     end
 end
 
@@ -520,6 +532,21 @@ function save_respawn_smarts()
         end
     end
 end
+
+function get_list_from_ltx(file_name, section_name)
+    local ini_config = ini_file(file_name)
+    local result = {}
+    local line_count = ini_config:line_count(section_name)
+    for i = 0, line_count - 1 do
+        local _, id = ini_config:r_line_ex(section_name, i, "", "") -- Only read the ID, ignore the value
+        if id then
+            table.insert(result, id)
+        end
+    end
+
+    return result -- Return the collected list
+end
+
 
 -- Collect and add section names based on current map and player rank
 function collect_squad_sections(squad_tag)
@@ -843,9 +870,12 @@ function is_actor_safe()
         toggle_predator_targeting()
         previous_actor_safe = actor_is_safe  -- Update the previous state
         pr("Cover percentage: %s : Indoor: %s", cover_percentage, actor_is_indoors)
-        if actor_is_safe then
-            actor_menu.set_msg(1, game.translate_string("st_safe_area"), 2)
+        if actor_is_safe == true then
+            set_safe_zone_status(true)
+        else
+            set_safe_zone_status(false)
         end
+        retarget_blood_moon_squads()
     end
 end
 
@@ -894,6 +924,9 @@ function check_if_in_safe_zone()
 end
 
 function toggle_predator_targeting()
+    local current_level_name = level.name()
+    local current_level_smarts = available_smart_terrains[current_level_name]
+
     for _, spawn in ipairs(active_spawns) do
         if spawn.is_predator_mutant then
             local se = alife_object(spawn.mutant_id)
@@ -902,28 +935,28 @@ function toggle_predator_targeting()
                     se.scripted_target = "actor"
                     se.rush_to_target = true
                     pr("Spawn ID [%s] Target Status: %s, Rushing: %s", spawn.mutant_id, se.scripted_target, se.rush_to_target)
-                else                                                    -- actor is safe
-                    for _, smart_list in pairs(available_smart_terrains) do
-                        if smart_list and #smart_list > 0 then
-                            local random_smart_id = smart_list[math.random(1, #smart_list)]
-                            local random_smart = alife_object(random_smart_id)
-                            if random_smart and random_smart:clsid() == clsid.smart_terrain then
-                                local smart_name = random_smart:name()
-                                -- Set the smart ID and name as target
-                                se.scripted_target = smart_name
-                                se.rush_to_target = true
-                                pr("Spawn ID [%s] Target Status: %s, Rushing: %s", spawn.mutant_id, se.scripted_target, se.rush_to_target)
-                                break  -- Exit the loop once a valid smart terrain is found
-                            end
+                else -- actor is safe
+                    if current_level_smarts and #current_level_smarts > 0 then -- Check if smarts exist for the current level
+                        local random_smart_id = current_level_smarts[math.random(1, #current_level_smarts)]
+                        local random_smart = alife_object(random_smart_id)
+                        if random_smart and random_smart:clsid() == clsid.smart_terrain then
+                            local smart_name = random_smart:name()
+                            se.scripted_target = smart_name
+                            se.rush_to_target = true
+                            pr("Spawn ID [%s] Target Status: %s, Rushing: %s in level [%s]", spawn.mutant_id, se.scripted_target, se.rush_to_target, current_level_name)
+                        else
+                            pr("Warning: Invalid smart terrain ID or object for predator [%s]", se:section_name())
                         end
+                    else
+                        pr("Warning: No suitable smart terrains found in level [%s] for predator [%s]", current_level_name, se:section_name())
                     end
-
                 end
             end
-        end    
+        end
     end
     pr("! Adjusted predator activity. Safe Zone: %s || Indoors: %s", actor_in_safe_zone, actor_is_indoors)
 end
+
 -- Function to stop targeting when the player opens the sleep menu
 function actor_sleeping(hud_name)
     if hud_name == "UISleep" then
@@ -944,31 +977,30 @@ end
 function assign_random_smart_target()
     ResetTimeEvent("cycle", "assign_smart_target", math.random(5, 10) * 60)
 
+    local current_level_name = level.name()
+    local current_level_smarts = available_smart_terrains[current_level_name]
+
     for _, spawn in pairs(active_spawns) do
         local se = alife_object(spawn.mutant_id)
-        
-        -- Check if the mutant is not a predator before assigning a target
         if se and not spawn.is_predator_mutant then
-            -- Assign a random smart terrain as target for non-predator mutants
-            for _, smart_list in pairs(available_smart_terrains) do
-                if smart_list and #smart_list > 0 then
-                    local random_smart_id = smart_list[math.random(1, #smart_list)]
-                    local random_smart = alife_object(random_smart_id)
-                    if random_smart and random_smart:clsid() == clsid.smart_terrain then
-                        local smart_name = random_smart:name()
-
-                        -- Set the smart ID and name as target
-                        se.scripted_target = smart_name
-                        se.rush_to_target = true
-                        pr("Non-predator mutant [%s] assigned to smart terrain [%s]", se:section_name(), smart_name)
-                        break  -- Exit the loop once a valid smart terrain is found
-                    end
+            if current_level_smarts and #current_level_smarts > 0 then -- Check if smarts exist for the current level
+                local random_smart_id = current_level_smarts[math.random(1, #current_level_smarts)]
+                local random_smart = alife_object(random_smart_id)
+                if random_smart and random_smart:clsid() == clsid.smart_terrain then
+                    local smart_name = random_smart:name()
+                    se.scripted_target = smart_name
+                    se.rush_to_target = true
+                    pr("Non-predator mutant [%s] assigned to smart terrain [%s] in level [%s]", se:section_name(), smart_name, current_level_name)
+                else
+                    pr("Warning: Invalid smart terrain ID or object for mutant [%s]", se:section_name())
                 end
+            else
+                pr("Warning: No suitable smart terrains found in level [%s] for mutant [%s]", current_level_name, se:section_name())
             end
         end
     end
 end
-    
+
 function update_mutant_spawn_status()
     -- Reset the time event to run again in 60 seconds
     ResetTimeEvent("cycle", "update_mutant_spawn_status", 120)
@@ -1065,12 +1097,29 @@ function monster_on_death_callback(npc, who)
 end
 
 function monster_on_loot_init(victim, loot_table)
+    if math.random() <= 0.30 then -- 30% chance to get an artifact when looting a boss mutant
+        if victim then
+            local boss_names = get_list_from_ltx(plugin_file_name, "boss_mutants") -- Use plugin_file_name instead of plugin_name
+            local boss_rewards = get_list_from_ltx(plugin_file_name, "boss_rewards") -- Use plugin_file_name instead of plugin_name
 
-    loot_table = {}
-    --if string.find(victim:section(), "mutagen") then
-        --t["af_fireball"] = { count = 1 }
-        --t["money_1000_5000"] = { count = 10 }
-    --end
+            -- Check if the victim's section is in the boss_names list
+            for _, boss_name in ipairs(boss_names) do
+                boss_name = string.gsub(boss_name, "respawn_", "")
+                if string.find(boss_name, victim:section()) then
+                    -- If it's a boss, add a random reward from boss_rewards
+                    local random_reward_index = math.random(1, #boss_rewards)
+                    local reward_item = boss_rewards[random_reward_index]
+                    
+                    if reward_item then
+                        loot_table[reward_item] = { count = 1 }
+                        pr("Added reward '%s' to boss loot table.", reward_item)
+                    else
+                        pr("Warning: Invalid reward item '%s' in boss_rewards section.", reward_item)
+                    end
+                end
+            end
+        end
+    end
 end
 
 function actor_on_update()
@@ -1194,26 +1243,51 @@ end
 
 -- functions for dev purposes only
 function on_key_press(key)
-    if key == DIK_keys["DIK_I"] and enable_debug then
-        --[[shuffle_smart_ids()
-        try_to_spawn()
+    --[[if key == DIK_keys["DIK_I"] and enable_debug then
+        --shuffle_smart_ids()
+        --try_to_spawn()
         get_spawnable_squads_report()
         news_manager.send_tip(db.actor, string.format("AVAILABLE SMARTS: %d  Mutant POOL: %d  MAX ACTIVE SPAWNS: %d Active Spanws: %d", count_available_smart_terrains(), #squads_to_spawn, max_active_spawns, #active_spawns), nil,nil, 3000)
-        ]]
     end
 
     if key == DIK_keys["DIK_O"] and enable_debug then
-        --[[delete_mutants()
+        --delete_mutants()
         get_active_spawns_report()
         news_manager.send_tip(db.actor, string.format("AVAILABLE SMARTS: %d  Mutant POOL: %d  MAX ACTIVE SPAWNS: %d Active Spanws: %d", count_available_smart_terrains(), #squads_to_spawn, max_active_spawns, #active_spawns), nil,nil, 3000)
-        ]]
-    end
+    end]]
 
     if key == DIK_keys["DIK_P"] and enable_debug then
         delete_mutants()
         get_current_game_values()
         news_manager.send_tip(db.actor, string.format("All active spawns deleted. Saving your game now will make it free from all RE:Spawn mutants. ACTIVE SPAWNS: %d", #active_spawns), nil,nil, 3000)
     end
+
+end
+
+function retarget_blood_moon_squads()
+    if blood_moon_manager then -- check if blood moon mod is installed
+        for id, _ in pairs(SIMBOARD.squads) do
+            local squad = alife_object(id)
+            if squad and squad.commander_id then
+                set_blood_moon_squad_target(squad)
+            end
+        end   
+    end
+end
+
+function set_blood_moon_squad_target(squad)
+    if not (string.find(squad:section_name(), "blood_moon")) then return end -- skip if squad is not from blood moon mod
+    if is_safe_zone == true then
+        local nearest_smart_id = get_nearest_smart_from_mutant_commander(squad)
+        local nearest_smart = alife_object(nearest_smart_id)
+        local nearest_smart_name = nearest_smart and nearest_smart:name()
+        squad.scripted_target = nearest_smart_name
+        squad.rush_to_target = true
+    elseif is_safe_zone == false then
+        squad.scripted_target = "actor"
+        squad.rush_to_target = true
+    end
+    pr("Setting Blood Moon Squad [%s] Target Status: %s, Rushing: %s", squad:name(), squad.scripted_target, squad.rush_to_target)
 end
 
 function anomaly_on_before_activate(zone, obj, flags)
@@ -1411,52 +1485,138 @@ end
         end
     end
 
+function game_timer(state)
+  if state == "mark" then
+    marked_time = game.get_game_time()
+    return "Time marked successfully."  --Optional return message for debugging
+  elseif state == "check" then
+    if marked_time then
+      local time_diff_seconds = game.get_game_time():diffSec(marked_time)
+      local time_diff_minutes = math.floor(time_diff_seconds / 60)  --Convert to minutes
+      return time_diff_minutes
+    else
+      return "Time not yet marked." --Optional return message
+    end
+  else
+    return "Invalid state. Use 'mark' or 'check'." --Optional return message
+  end
+end
 
--- Helper function to calculate distances from the actor to all smart terrains on the current level
-function calculate_smart_distances()
-    local distances = {}
-    local actor_pos = db.actor:position()
+local passives = {
+    "cerb",
+    "rotan_normal"
+}
+
+function on_enemy_eval(npc, enemy, flags)
     
-    for _, smart_id in ipairs(available_smart_terrains[level.name()]) do
-        local smart = alife_object(smart_id)
-        if smart then
-        local smart_pos = smart.position
-        local distance = actor_pos:distance_to(smart_pos) -- Use distance_to for 3D distance
-        distances[smart_id] = distance
+    local function matches_section(section)
+        for _, value in ipairs(passives) do
+            if section == value then
+                return true
+            end
+        end
+        return false
+    end
+    if matches_section(npc:section()) or matches_section(enemy:section()) then
+        flags.override = true
+        flags.ret_value = false
+    end
+end
+
+function add_safe_zone_indicator()
+    actor_status.add_indicator("SafeZone", {
+        index = 14,  -- Use a unique index
+        typ = "state",
+        functor = {"rebound_encounters", "get_safe_zone_status", true},
+        icon = "ui\\shelter_indicator\\StatusShelter.dds",  -- Replace with your icon path
+        anim_icon = false,
+        anim_bk = false,
+    })
+end
+
+function set_safe_zone_status(status)
+    is_safe_zone = status
+end
+
+function get_safe_zone_status(visual)
+    if visual then
+        if is_safe_zone == true then
+            return 1
+        elseif is_safe_zone == false then
+            return 0
         end
     end
-    
-    return distances
+end
+
+function get_nearest_smart_from_mutant_commander(squad)
+    local distances = {}
+    local squad_commander = alife_object(squad:commander_id())
+    if not squad_commander then return nil end
+  
+    local commander_position = squad_commander.position
+    for _, smart_id in ipairs(available_smart_terrains[level.name()]) do
+      local smart = alife_object(smart_id)
+      if smart then
+        local smart_pos = smart.position
+        local distance = commander_position:distance_to(smart_pos)
+        distances[smart_id] = distance
+      end
     end
-    
-    
--- Function to get a sorted table of smart IDs on the current level, excluding those within the safe radius
-function get_sorted_smart_ids()
-    local distances = calculate_smart_distances()
+  
+    local sorted_smart_ids = {}
+    local smart_near_actor = get_nearest_smart_from_actor()
+    for smart_id, distance in pairs(distances) do
+      if (distance < 300) and smart_id ~= smart_near_actor then
+        table.insert(sorted_smart_ids, {smart_id = smart_id, distance = distance})
+      end
+    end
+  
+    table.sort(sorted_smart_ids, function(a, b) return a.distance < b.distance end)
+  
+    -- Return only the smart_id of the nearest smart terrain
+    if #sorted_smart_ids > 0 then
+      return sorted_smart_ids[1].smart_id
+    else
+      return nil -- Handle the case where no smart terrains are found
+    end
+end
+
+function get_nearest_smart_from_actor()
+	local distances = {}
+	local actor_pos = db.actor:position()
+	
+	for _, smart_id in ipairs(available_smart_terrains[level.name()]) do
+		local smart = alife_object(smart_id)
+		if smart then
+			local smart_pos = smart.position
+			local distance = actor_pos:distance_to(smart_pos)
+			distances[smart_id] = distance
+		end
+	end
+
     local sorted_smart_ids = {}
 
-    -- Filter out smarts within the safe radius
-    for smart_id, distance in pairs(distances) do
-        if distance > safe_radius then  --Check if outside safe radius
-        table.insert(sorted_smart_ids, {smart_id = smart_id, distance = distance})
-        end
+	for smart_id, distance in pairs(distances) do
+		if distance < 200 then 
+			table.insert(sorted_smart_ids, {smart_id = smart_id, distance = distance})
+		end
+	end
+		
+	table.sort(sorted_smart_ids, function(a, b) return a.distance < b.distance end)
+
+    if #sorted_smart_ids > 0 then
+        return sorted_smart_ids[1].smart_id
+      else
+        return nil -- Handle the case where no smart terrains are found
     end
-        
-    -- Sort the table by distance (ascending, nearest to farthest)
-    table.sort(sorted_smart_ids, function(a, b) return a.distance < b.distance end)
-
-
-    -- Create a new table containing only the smart IDs
-    local result = {}
-    for i,entry in ipairs(sorted_smart_ids) do
-        result[i] = entry.smart_id
-    end
-
-    return result
 end
+
+  
+
 
 -- Initialize the script on game start
 function on_game_start()
+    add_safe_zone_indicator()
     RegisterScriptCallback("actor_on_update", actor_on_update)
     RegisterScriptCallback("actor_on_update", is_actor_safe)
     RegisterScriptCallback("monster_on_loot_init", monster_on_loot_init)
@@ -1472,4 +1632,5 @@ function on_game_start()
     RegisterScriptCallback("monster_on_hit_callback", monster_on_hit_callback)
     RegisterScriptCallback("on_key_press", on_key_press)
     RegisterScriptCallback("anomaly_on_before_activate", anomaly_on_before_activate)
+    RegisterScriptCallback("on_enemy_eval", on_enemy_eval)
 end

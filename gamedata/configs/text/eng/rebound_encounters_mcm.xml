@@ -67,14 +67,7 @@
     <string id="ui_mcm_rebound_encounters_delete_mutants_instructions">
         <text>With Debug enabled, pressing the "P" key on your keyboard while in-game will delete all RE:Spawn mutants. Use this if you plan to uninstall some mutants from your game. Save after deleting spawns.</text>
     </string>
-
-
     <string id="ui_mcm_rebound_encounters_something">
         <text>Place holder</text>
-    </string>
-
-	<string id="st_safe_area">
-        <text>Safe Area</text>
-    </string>
-    
+    </string>    
 </string_table>
