@@ -58,8 +58,13 @@ kind_to_section = {
 	["SM_YOZHIK"]      = "yozhik",
 	["SM_ZANOZA"]      = "zanoza",
 	["SM_ZEDDEV"]      = "zeddev",
-	["SM_ZHABA"]       = "zhaba"
-	
+	["SM_ZHABA"]       = "zhaba",
+	["SM_CERB"]        = "cerb",
+	["SM_CHICKEN"]     = "chicken",
+	["SM_HOG"]         = "hog",
+	["SM_PIG"]         = "pig",
+	["SM_ROOSTER"]     = "rooster",
+	["SM_ROTAN"]       = "rotan"
 }
 
 clsid_to_section = {
@@ -134,7 +139,13 @@ clsdbg_to_section = {
 	["SM_YOZHIK"]      = "yozhik",
 	["SM_ZANOZA"]      = "zanoza",
 	["SM_ZEDDEV"]      = "zeddev",
-	["SM_ZHABA"]       = "zhaba"
+	["SM_ZHABA"]       = "zhaba",
+	["SM_CERB"]        = "cerb",
+	["SM_CHICKEN"]     = "chicken",
+	["SM_HOG"]         = "hog",
+	["SM_PIG"]         = "pig",
+	["SM_ROOSTER"]     = "rooster",
+	["SM_ROTAN"]       = "rotan"
 }
 
 killed_mutant_tbl = { -- ponney68: This table based on "species" of mutants
@@ -191,6 +202,12 @@ killed_mutant_tbl = { -- ponney68: This table based on "species" of mutants
 	zanoza              = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
 	zeddev              = {file="ui\\ui_actor_monsters_pda_zeddev", x="0", y="0", type="small"},
 	zhaba               = {file="ui\\ui_actor_monsters_pda_zhaba", x="0", y="0", type="small"},
+	cerb                = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	chicken             = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	hog		            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	pig		            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	rooster	            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	rotan	            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
 	
     snork				= {file="ui\\ui_actor_monsters_pda",x="393",y="0",type="small"},
 	dog					= {file="ui\\ui_actor_monsters_pda",x="0",y="800",type="small"},
@@ -416,8 +433,13 @@ function GetNewMonsterDescription(obj,index,sec,cls) -- monkey-patch for vanilla
 		["SM_YOZHIK"]      = "yozhik",
 		["SM_ZANOZA"]      = "zanoza",
 		["SM_ZEDDEV"]      = "zeddev",
-		["SM_ZHABA"]       = "zhaba"
-
+		["SM_ZHABA"]       = "zhaba",
+		["SM_CERB"]        = "cerb",
+		["SM_CHICKEN"]     = "chicken",
+		["SM_HOG"]         = "hog",
+		["SM_PIG"]         = "pig",
+		["SM_ROOSTER"]     = "rooster",
+		["SM_ROTAN"]       = "rotan"
 	}
 	
 	if clsid.karlik_s 	 then m_class[clsid.karlik_s] 	 = "karlik" 	end --> CoC 1.5

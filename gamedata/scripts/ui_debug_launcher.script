@@ -1718,6 +1718,13 @@ local obj_to_spawn_classes = {
 		["SM_ZANOZA"]      = "NPC (Mutant)",
 		["SM_ZEDDEV"]      = "NPC (Mutant)",
 		["SM_ZHABA"]       = "NPC (Mutant)",
+		["SM_CERB"]        = "NPC (Mutant)",
+		["SM_CHICKEN"]     = "NPC (Mutant)",
+		["SM_HOG"]         = "NPC (Mutant)",
+		["SM_PIG"]         = "NPC (Mutant)",
+		["SM_ROOSTER"]     = "NPC (Mutant)",
+		["SM_ROTAN"]       = "NPC (Mutant)",
+
 
 		["C_HLCP_S"] 	= "Vehicles",
 		["C_NIVA"] 		= "Vehicles",

@@ -144,6 +144,25 @@
 	<string id="respawn_mutant_scuttler">
 	<text>Scuttler</text>
 	</string>
+	<string id="respawn_mutant_cerb">
+    <text>Cerb</text>
+	</string>
+	<string id="respawn_mutant_chicken">
+		<text>Chicken</text>
+	</string>
+	<string id="respawn_mutant_hog">
+		<text>Hog</text>
+	</string>
+	<string id="respawn_mutant_pig">
+		<text>Pig</text>
+	</string>
+	<string id="respawn_mutant_rooster">
+		<text>Rooster</text>
+	</string>
+	<string id="respawn_mutant_rotan">
+		<text>Rotan</text>
+	</string>
+
 
 
     <!-- Boss Spawn Warnings -->
