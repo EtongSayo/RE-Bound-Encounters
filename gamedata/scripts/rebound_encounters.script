@@ -58,7 +58,7 @@ local xspawn_time = nil
 local ctime_to_t = utils_data.CTime_to_table
 local t_to_ctime = utils_data.CTime_from_table
 local tmr
-local marked_time = nil -- Initialize marked_time
+local marked_times = {} -- Initialize marked_time
 
 -- Define a timer variable and a delay duration
 local monster_hit_timer = 0
@@ -79,7 +79,7 @@ local active_passive_squad = {}
 
 local map_exemptions = 
 {
-    "l03u_agr_underground", "fake_start",  "jupiter_underground", "l08u_brainlab", "l04u_labx18", "l10u_bunker", "labx8", "l12u_control_monolith", "l13u_warlab", "l12u_sarcofag", "l08u_brainlab"
+    "l05_bar", "l03u_agr_underground", "fake_start",  "jupiter_underground", "l08u_brainlab", "l04u_labx18", "l10u_bunker", "labx8", "l12u_control_monolith", "l13u_warlab", "l12u_sarcofag", "l08u_brainlab", "bunker_a1"
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -394,7 +394,8 @@ function spawn_mutants()
                                 add_squad_members(squad, squad_size_by_level)
                             else
                                 if squad:npc_count() < actor_rank_value then
-                                    add_squad_members(squad, actor_rank_value)
+                                    local half_squad = half_max_squad_size(actor_rank_value)
+                                    add_squad_members(squad, half_squad)
                                 end
                             end
                         end
@@ -409,6 +410,10 @@ function spawn_mutants()
         if has_spawned then break end  -- Exit the main loop if a spawn occurred
     end
 end
+
+function half_max_squad_size(max_squad_size)
+    return math.floor(max_squad_size / 2)
+  end
 
 function add_squad_members(squad, max_squad_size)
     local max_squad_count
@@ -1144,7 +1149,8 @@ function count_available_smart_terrains()
 end
 -- 
 function actor_on_first_update()
-    game_timer("mark")
+    game_timer("mark", 1)
+    game_timer("mark", 2)
     load_smart_terrain_exemptions()
     save_respawn_smarts()
 
@@ -1242,10 +1248,13 @@ function actor_on_update()
         if math.random() <= 0.6 then
             send_random_rumor()
         end
-        -- for spawning passives
-        spawn_passive_squads_near_actor()
     end
 
+    -- for spawning passives
+    if game_timer("check", 2) >= 10 then
+        spawn_passive_squads_near_actor()
+        game_timer("mark", 2)
+    end
     
 end
 
@@ -1418,14 +1427,14 @@ function set_blood_moon_squad_target(squad)
 end
 
 function retarget_vanilla_mutants()
-    if game_timer("check") < 30 then return end
+    if game_timer("check", 1) < 30 then return end
     for id, _ in pairs(SIMBOARD.squads) do
         local squad = alife_object(id)
         if squad and squad.commander_id and squad.online then
             set_vanilla_mutant_squad_target(squad)
         end
     end
-    game_timer("mark")
+    game_timer("mark", 1)
 end
 
 function set_vanilla_mutant_squad_target(squad)
@@ -1619,21 +1628,28 @@ function shuffle_smart_ids()
     end
 end
 
-function game_timer(state)
-  if state == "mark" then
-    marked_time = game.get_game_time()
-    return "Time marked successfully."
-  elseif state == "check" then
-    if marked_time then
-      local time_diff_seconds = game.get_game_time():diffSec(marked_time)
-      local time_diff_minutes = math.floor(time_diff_seconds / 60)  --Convert to minutes
-      return time_diff_minutes
+function game_timer(state, id)
+    if state == "mark" then
+        -- Mark the current time for the given id
+        marked_times[id] = game.get_game_time()
+        return "Time marked successfully for id: " .. tostring(id)
+    elseif state == "check" then
+        -- Check the marked time for the given id
+        local marked_time = marked_times[id]
+        if marked_time then
+            local time_diff_seconds = game.get_game_time():diffSec(marked_time)
+            local time_diff_minutes = math.floor(time_diff_seconds / 60)  -- Convert to minutes
+            return time_diff_minutes
+        else
+            return "Time not yet marked for id: " .. tostring(id)
+        end
+    elseif state == "clear" then
+        -- Clear all marked times
+        marked_times = {}
+        return "All marked times cleared."
     else
-      return "Time not yet marked."
+        return "Invalid state. Use 'mark', 'check', or 'clear'."
     end
-  else
-    return "Invalid state. Use 'mark' or 'check'."
-  end
 end
 
 function on_enemy_eval(npc, enemy, flags)
