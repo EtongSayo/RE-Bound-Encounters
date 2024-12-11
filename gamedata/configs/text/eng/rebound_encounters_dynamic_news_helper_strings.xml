@@ -1078,6 +1078,158 @@
 		<text>Fangs</text>
 	</string>
 
-	
+	<string id="st_dyn_news_cerb_1">
+	<text>a Cerb</text>
+	</string>
+	<string id="st_dyn_news_cerb_2">
+		<text>We were attacked by a Cerb</text>
+	</string>
+	<string id="st_dyn_news_cerb_3">
+		<text>We got jumped by a Cerb</text>
+	</string>
+	<string id="st_dyn_news_cerb_4">
+		<text>We were attacked by Cerbs</text>
+	</string>
+	<string id="st_dyn_news_cerb_5">
+		<text>We got ambushed by Cerbs</text>
+	</string>
+	<string id="st_dyn_news_cerb_6">
+		<text>a pack of Cerbs</text>
+	</string>
+	<string id="st_dyn_news_cerb_7">
+		<text>Cerbs</text>
+	</string>
+
+	<string id="st_dyn_news_chicken_1">
+		<text>a Chicken</text>
+	</string>
+	<string id="st_dyn_news_chicken_2">
+		<text>We were attacked by a Chicken</text>
+	</string>
+	<string id="st_dyn_news_chicken_3">
+		<text>We got jumped by a Chicken</text>
+	</string>
+	<string id="st_dyn_news_chicken_4">
+		<text>We were attacked by Chickens</text>
+	</string>
+	<string id="st_dyn_news_chicken_5">
+		<text>We got ambushed by Chickens</text>
+	</string>
+	<string id="st_dyn_news_chicken_6">
+		<text>a flock of Chickens</text>
+	</string>
+	<string id="st_dyn_news_chicken_7">
+		<text>Chickens</text>
+	</string>
+
+	<string id="st_dyn_news_hog_1">
+		<text>a Hog</text>
+	</string>
+	<string id="st_dyn_news_hog_2">
+		<text>We were attacked by a Hog</text>
+	</string>
+	<string id="st_dyn_news_hog_3">
+		<text>We got jumped by a Hog</text>
+	</string>
+	<string id="st_dyn_news_hog_4">
+		<text>We were attacked by Hogs</text>
+	</string>
+	<string id="st_dyn_news_hog_5">
+		<text>We got ambushed by Hogs</text>
+	</string>
+	<string id="st_dyn_news_hog_6">
+		<text>a group of Hogs</text>
+	</string>
+	<string id="st_dyn_news_hog_7">
+		<text>Hogs</text>
+	</string>
+
+	<string id="st_dyn_news_pig_1">
+		<text>a Pig</text>
+	</string>
+	<string id="st_dyn_news_pig_2">
+		<text>We were attacked by a Pig</text>
+	</string>
+	<string id="st_dyn_news_pig_3">
+		<text>We got jumped by a Pig</text>
+	</string>
+	<string id="st_dyn_news_pig_4">
+		<text>We were attacked by Pigs</text>
+	</string>
+	<string id="st_dyn_news_pig_5">
+		<text>We got ambushed by Pigs</text>
+	</string>
+	<string id="st_dyn_news_pig_6">
+		<text>a herd of Pigs</text>
+	</string>
+	<string id="st_dyn_news_pig_7">
+		<text>Pigs</text>
+	</string>
+
+	<string id="st_dyn_news_rooster_1">
+		<text>a Rooster</text>
+	</string>
+	<string id="st_dyn_news_rooster_2">
+		<text>We were attacked by a Rooster</text>
+	</string>
+	<string id="st_dyn_news_rooster_3">
+		<text>We got jumped by a Rooster</text>
+	</string>
+	<string id="st_dyn_news_rooster_4">
+		<text>We were attacked by Roosters</text>
+	</string>
+	<string id="st_dyn_news_rooster_5">
+		<text>We got ambushed by Roosters</text>
+	</string>
+	<string id="st_dyn_news_rooster_6">
+		<text>a flock of Roosters</text>
+	</string>
+	<string id="st_dyn_news_rooster_7">
+		<text>Roosters</text>
+	</string>
+
+	<string id="st_dyn_news_rotan_1">
+		<text>a Rotan</text>
+	</string>
+	<string id="st_dyn_news_rotan_2">
+		<text>We were attacked by a Rotan</text>
+	</string>
+	<string id="st_dyn_news_rotan_3">
+		<text>We got jumped by a Rotan</text>
+	</string>
+	<string id="st_dyn_news_rotan_4">
+		<text>We were attacked by Rotans</text>
+	</string>
+	<string id="st_dyn_news_rotan_5">
+		<text>We got ambushed by Rotans</text>
+	</string>
+	<string id="st_dyn_news_rotan_6">
+		<text>a school of Rotans</text>
+	</string>
+	<string id="st_dyn_news_rotan_7">
+		<text>Rotans</text>
+	</string>
+
+	<string id="st_dyn_news_slizen_1">
+	<text>a Slizen</text>
+	</string>
+	<string id="st_dyn_news_slizen_2">
+		<text>We were attacked by a Slizen</text>
+	</string>
+	<string id="st_dyn_news_slizen_3">
+		<text>We got jumped by a Slizen</text>
+	</string>
+	<string id="st_dyn_news_slizen_4">
+		<text>We were attacked by Slizens</text>
+	</string>
+	<string id="st_dyn_news_slizen_5">
+		<text>We got ambushed by Slizens</text>
+	</string>
+	<string id="st_dyn_news_slizen_6">
+		<text>a pack of Slizens</text>
+	</string>
+	<string id="st_dyn_news_slizen_7">
+		<text>Slizens</text>
+	</string>
 
 </string_table>

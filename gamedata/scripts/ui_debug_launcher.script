@@ -1724,6 +1724,7 @@ local obj_to_spawn_classes = {
 		["SM_PIG"]         = "NPC (Mutant)",
 		["SM_ROOSTER"]     = "NPC (Mutant)",
 		["SM_ROTAN"]       = "NPC (Mutant)",
+		["SM_SLIZEN"]      = "NPC (Mutant)",
 
 
 		["C_HLCP_S"] 	= "Vehicles",

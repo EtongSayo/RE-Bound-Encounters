@@ -58,7 +58,7 @@ local xspawn_time = nil
 local ctime_to_t = utils_data.CTime_to_table
 local t_to_ctime = utils_data.CTime_from_table
 local tmr
-local marked_times = {} -- Initialize marked_time
+local marked_times = {}
 
 -- Define a timer variable and a delay duration
 local monster_hit_timer = 0
@@ -143,18 +143,6 @@ function count_active_boss_mutants()
         end
     end
     active_boss_mutant = count
-end
-
-function spawn_passive_fauna()
-
-    local is_map_exempt = false
-    local current_map_name = tostring(level.name())
-    for index, map_name in pairs(map_exemptions) do         -- Check if the current map is meant to be exempt from spawns
-        if map_name == current_map_name then
-            is_map_exempt = true
-            break
-        end 
-    end
 end
 
 -- Function to attempt spawning mutants
@@ -484,18 +472,14 @@ function delete_mutants()
     
     -- for passive mutants
     for idx = #active_passive_squad, 1, -1 do
-        local spawn_id = active_passive_squad[idx]
-        local squad = alife_object(spawn_id)
+        local spawn = active_passive_squad[idx]
+        local se_npc = alife_object(spawn.npc_id)
 
-        if squad then
-            if squad.remove_squad and squad.get_script_target then                
-                alife_release(squad)
-                table.remove(active_passive_squad, idx)
-            else
-                pr("Warning: squad id %s is not a valid squad object", spawn_id)
-            end
+        if se_npc then
+            alife_release(se_npc)
+            table.remove(active_passive_squad, idx)
         else
-            pr("Warning: squad id %s does not exist", spawn_id)
+            pr("Warning: squad id %s does not exist", spawn.npc_id)
         end
     end
 end
@@ -540,15 +524,18 @@ function server_entity_on_unregister(obj)
                     pr("Warning: Unable to send message, db.actor is nil")
                 end
             end
-            
             table.remove(active_spawns, idx)
         end
     end
+
     -- for passive mutants
-    for idx, squad_id in ipairs(active_passive_squad) do  -- squad_id, not spawn
-        if obj.id == squad_id then
-            pr("RE:Bound removing passive squad_id: %s from table", squad_id)
-            table.remove(active_passive_squad, idx)
+    if active_passive_squad then
+        for idx = #active_passive_squad, 1, -1 do
+            local spawn = active_passive_squad[idx]
+            if obj.id == spawn.squad_id then
+                pr("RE:Bound removing passive squad_id: %s from table", spawn.squad_id)
+                table.remove(active_passive_squad, idx)
+            end
         end
     end
 end
@@ -1149,8 +1136,9 @@ function count_available_smart_terrains()
 end
 -- 
 function actor_on_first_update()
-    game_timer("mark", 1)
-    game_timer("mark", 2)
+    if game_timer("initialize", 2) then
+        pr("Timers initialized")
+    end
     load_smart_terrain_exemptions()
     save_respawn_smarts()
 
@@ -1163,6 +1151,7 @@ function actor_on_first_update()
         shuffle_smart_ids() -- reshuffle smart id order
         try_to_spawn()
     end
+    spawn_passive_squads_near_actor()
 end
 
 -- Function to check for active boss squads and store their NPC IDs
@@ -1227,7 +1216,24 @@ function monster_on_loot_init(victim, loot_table)
 end
 
 function actor_on_update()
-    -- time check for spawning interval
+
+    
+    if game_timer("check", 1) >= 5 then -- for spawning passive fauna
+        pr("-- Spawning Passive Fauna")
+        despawn_distant_passive_fauna()
+        spawn_passive_squads_near_actor()
+       game_timer("mark", 1)
+    end
+    if game_timer("check", 2) >= 15 then -- for retargeting vanilla mutants
+        pr("-- Retargeting Vanilla Mutants")
+        retarget_vanilla_mutants()
+        game_timer("mark", 2)
+    end
+
+    actor_update()
+end
+
+function actor_update()
     local tg = time_global()
     if (tmr and tg < tmr) then return end  -- If the timer hasn't expired, return
     if is_day() then
@@ -1249,14 +1255,78 @@ function actor_on_update()
             send_random_rumor()
         end
     end
-
-    -- for spawning passives
-    if game_timer("check", 2) >= 10 then
-        spawn_passive_squads_near_actor()
-        game_timer("mark", 2)
-    end
-    
 end
+
+function game_timer(state, id)
+    if state == "mark" then
+        if not id then return end -- Check for `id` here
+        local found = false
+        for _, entry in ipairs(marked_times) do
+            if entry.id == id then
+                entry.time = game.get_game_time() -- Reset the time for this id
+                found = true
+                break
+            end
+        end
+
+        if not found then
+            table.insert(marked_times, {id = id, time = game.get_game_time()})
+        end
+
+    elseif state == "check" then
+        if not id then return end -- Check for `id` here
+        for _, entry in ipairs(marked_times) do
+            if entry.id == id then
+                local time_diff_seconds = game.get_game_time():diffSec(entry.time)
+                local time_diff_minutes = math.floor(time_diff_seconds / 60)  -- Convert to minutes
+                return time_diff_minutes
+            end
+        end
+
+        -- If the id is not found, automatically mark it
+        game_timer("mark", id)
+        return 0 -- Return 0 since it has just been marked
+
+    elseif state == "clear" then
+        -- Clear all marked times
+        marked_times = {}
+    end
+end
+
+function despawn_distant_passive_fauna()
+    if #active_passive_squad > 0 then
+        for i = #active_passive_squad, 1, -1 do -- Iterate backwards for safe removal
+            local spawn = active_passive_squad[i]
+            local npc = get_object_by_id(spawn.npc_id)
+
+            if npc and is_npc_beyond_distance(npc:id(), 300) then
+                local npc_id = npc:id()
+                local se_npc = alife_object(npc_id)
+                if npc:alive() then
+                    npc:kill(npc)
+                end
+                safe_release_manager.release(se_npc)
+                pr("! Despawning distant passive fauna: %s", npc:name())
+            end
+        end
+    end
+end
+
+function is_npc_beyond_distance(npc_id, distance)
+	local npc = alife_object(npc_id)
+	if npc then
+	  if npc and npc.position then
+		local actor_pos = db.actor:position()
+		local npc_pos = npc.position
+		return actor_pos:distance_to(npc_pos) > distance
+	  else
+		pr("Warning: Npc not found or position unavailable for npc: %s", npc_id)
+		return false 
+	  end
+	else
+	  return false 
+	end
+  end
 
 function init_ray_table()
     -- Build a table of ray directions
@@ -1340,8 +1410,9 @@ end
 
 
 function monster_on_hit_callback(npc, amount, local_direction, who, bone_index)
-    add_attacked_npc_id(npc) -- for passive animals
-
+    if IsStalker(who) then
+        add_attacked_npc_id(npc) -- for passive animals
+    end
     local current_time = time_global() -- Get the current game time
     if (current_time - monster_hit_timer) < monster_hit_delay then
         return
@@ -1427,24 +1498,84 @@ function set_blood_moon_squad_target(squad)
 end
 
 function retarget_vanilla_mutants()
-    if game_timer("check", 1) < 30 then return end
-    for id, _ in pairs(SIMBOARD.squads) do
-        local squad = alife_object(id)
-        if squad and squad.commander_id and squad.online then
-            set_vanilla_mutant_squad_target(squad)
+        for id, _ in pairs(SIMBOARD.squads) do
+            local squad = alife_object(id)
+            if squad and squad.commander_id and squad.online then
+                set_vanilla_mutant_squad_target(squad)
+            end
         end
+end
+
+-- Table to hold marked times
+marked_times = marked_times or {}
+
+function game_timer(state, id)
+    if id == nil and state ~= "initialize" then
+        return false, "Error: ID is required for this state."
     end
-    game_timer("mark", 1)
+
+    if state == "mark" then
+        -- Mark or reset the time for the given id
+        local found = false
+        for _, entry in ipairs(marked_times) do
+            if entry.id == id then
+                entry.time = game.get_game_time() -- Reset the time for this id
+                found = true
+                break
+            end
+        end
+
+        if not found then
+            table.insert(marked_times, {id = id, time = game.get_game_time()})
+        end
+
+        return true
+
+    elseif state == "check" then
+        -- Check the marked time for the given id
+        for _, entry in ipairs(marked_times) do
+            if entry.id == id then
+                local time_diff_seconds = game.get_game_time():diffSec(entry.time)
+                local time_diff_minutes = math.floor(time_diff_seconds / 60)  -- Convert to minutes
+                return time_diff_minutes
+            end
+        end
+
+        -- If the id is not found, automatically mark it
+        game_timer("mark", id)
+        return 0 -- Return 0 minutes for unmarked IDs
+
+    elseif state == "initialize" then
+        -- Initialize and mark the specified number of IDs
+        if type(id) ~= "number" or id <= 0 then
+            return false, "Error: ID must be a positive number for initialization."
+        end
+
+        for i = 1, id do
+            table.insert(marked_times, {id = i, time = game.get_game_time()})
+        end
+
+        return true
+
+    elseif state == "clear" then
+        -- Clear all marked times
+        marked_times = {}
+        return true
+
+    else
+        return false, "Invalid state. Use 'mark', 'check', 'initialize', or 'clear'."
+    end
 end
 
 function set_vanilla_mutant_squad_target(squad)
+    if not IsMonster(squad) then return end
     if get_object_story_id(squad.id) then return end
     if (string.find(squad:section_name(), "blood_moon")) and (string.find(squad:section_name(), "respawn_")) then return end -- skip if from respawn or blood moon mods
     local random_smart = get_random_smart_terrain_object()
     local random_smart_name = random_smart and random_smart:name()
     squad.scripted_target = random_smart_name
     squad.rush_to_target = true
-    pr("Setting Vanilla Mutant Squad [%s] Target Status: %s, Rushing: %s", squad:name(), squad.scripted_target, squad.rush_to_target)
+    pr("-- RE:Bound - Setting Vanilla Mutant Squad [%s] Target Status: %s, Rushing: %s", squad:name(), squad.scripted_target, squad.rush_to_target)
 end
 
 function get_random_smart_terrain_object()
@@ -1628,30 +1759,6 @@ function shuffle_smart_ids()
     end
 end
 
-function game_timer(state, id)
-    if state == "mark" then
-        -- Mark the current time for the given id
-        marked_times[id] = game.get_game_time()
-        return "Time marked successfully for id: " .. tostring(id)
-    elseif state == "check" then
-        -- Check the marked time for the given id
-        local marked_time = marked_times[id]
-        if marked_time then
-            local time_diff_seconds = game.get_game_time():diffSec(marked_time)
-            local time_diff_minutes = math.floor(time_diff_seconds / 60)  -- Convert to minutes
-            return time_diff_minutes
-        else
-            return "Time not yet marked for id: " .. tostring(id)
-        end
-    elseif state == "clear" then
-        -- Clear all marked times
-        marked_times = {}
-        return "All marked times cleared."
-    else
-        return "Invalid state. Use 'mark', 'check', or 'clear'."
-    end
-end
-
 function on_enemy_eval(npc, enemy, flags)
     local function matches_section(section)
         for _, value in ipairs(passive_fauna) do
@@ -1707,31 +1814,33 @@ function get_nearest_smart_from_mutant_commander(squad)
     local distances = {}
     local squad_commander = alife_object(squad:commander_id())
     if not squad_commander then return nil end
-  
+
     local commander_position = squad_commander.position
     for _, smart_id in ipairs(available_smart_terrains[level.name()]) do
-      local smart = alife_object(smart_id)
-      if smart then
-        local smart_pos = smart.position
-        local distance = commander_position:distance_to(smart_pos)
-        distances[smart_id] = distance
-      end
+        local smart = alife_object(smart_id)
+        if smart then
+            local smart_pos = smart.position
+            local distance = commander_position:distance_to(smart_pos)
+            distances[smart_id] = distance
+        end
     end
-  
+
     local sorted_smart_ids = {}
     local smart_near_actor = get_nearest_smart_from_actor()
+
     for smart_id, distance in pairs(distances) do
-      if (distance < 300) and smart_id ~= smart_near_actor then
-        table.insert(sorted_smart_ids, {smart_id = smart_id, distance = distance})
-      end
+        -- Check for nil before comparison
+        if (distance < 300) and (smart_near_actor == nil or smart_id ~= smart_near_actor) then
+            table.insert(sorted_smart_ids, {smart_id = smart_id, distance = distance})
+        end
     end
-  
+
     table.sort(sorted_smart_ids, function(a, b) return a.distance < b.distance end)
-  
+
     if #sorted_smart_ids > 0 then
-      return sorted_smart_ids[1].smart_id
+        return sorted_smart_ids[1].smart_id
     else
-      return nil
+        return nil
     end
 end
 
@@ -1768,16 +1877,20 @@ end
 function get_all_smart_terrain_ids_current_level()
     local current_level_name = level.name()
     local smart_terrain_ids = {}
-  
+
     for i = 1, MAX_SMART_ID do
-      local smart = alife_object(i)
-      if smart and smart:clsid() == clsid.smart_terrain then 
-        local smart_level_name = get_se_obj_level_name(smart)
-        if smart_level_name == current_level_name then 
-          table.insert(smart_terrain_ids, smart.id)
+        local smart = alife_object(i)
+        if smart and smart:clsid() == clsid.smart_terrain then
+            local smart_level_name = get_se_obj_level_name(smart)
+            if smart_level_name == current_level_name then
+                table.insert(smart_terrain_ids, smart.id)
+            end
         end
-      end
     end
+
+    -- Shuffle the smart_terrain_ids table in-place
+    shuffle_table(smart_terrain_ids)
+
     return smart_terrain_ids
 end
 
@@ -1802,16 +1915,30 @@ function print_passive_fauna_data()
         pr("  - passives_to_spawn: (Empty)")
     end
 
-    -- Print passive_fauna
+    -- Print passive_fauna configuration
     if #passive_fauna > 0 then
         local fauna_data = {}
         for i, fauna in ipairs(passive_fauna) do
             local npcs_list = #fauna.npcs > 0 and table.concat(fauna.npcs, ", ") or "(Empty)"
             table.insert(fauna_data, npcs_list .. ", ")
         end
-        pr("  - passive_fauna: " .. table.concat(fauna_data, "; "))
+        pr("  - passive_fauna (config): " .. table.concat(fauna_data, "; "))
     else
-        pr("  - passive_fauna: (Empty)")
+        pr("  - passive_fauna (config): (Empty)")
+    end
+
+    -- Print active_passive_squad with distance to actor
+    if #active_passive_squad > 0 then
+        local active_squad_data = {}
+        for i, squad in ipairs(active_passive_squad) do
+            local npc = alife_object(squad.npc_id)
+            local npc_name = npc and npc:name() or "Unknown NPC"
+            local distance = npc and npc.position and db.actor:position():distance_to(npc.position) or "N/A"
+            table.insert(active_squad_data, string.format("npc_id=%d, name=%s, distance=%.2f", squad.npc_id, npc_name, distance))
+        end
+        pr("  - active_passive_squad: " .. table.concat(active_squad_data, ", "))
+    else
+        pr("  - active_passive_squad: (Empty)")
     end
 end
 
@@ -1820,7 +1947,7 @@ function spawn_passive_squads_near_actor()
 
     collect_passive_squad_sections()
 
-    local spawn_threshold = math.floor(#smart_terrain_ids * 0.3)
+    local spawn_threshold = 3
 
     if active_passive_squad and (#active_passive_squad < spawn_threshold) then
         local actor_pos = db.actor:position()
@@ -1831,7 +1958,7 @@ function spawn_passive_squads_near_actor()
             local smart = alife_object(smart_id)
             if smart then
                 local distance = actor_pos:distance_to(smart.position)
-                if distance >= 100 and distance <= 300 and distance < nearest_distance then
+                if distance >= 60 and distance <= 300 and distance < nearest_distance then
                     nearest_smart_id = smart_id
                     nearest_distance = distance
                 end
@@ -1841,38 +1968,41 @@ function spawn_passive_squads_near_actor()
         if nearest_smart_id and #passives_to_spawn > 0 then
             local random_squad = passives_to_spawn[math.random(1, #passives_to_spawn)].sec
             local squad = SIMBOARD:create_squad(alife_object(nearest_smart_id), random_squad)
-
             if squad then
-                table.insert(active_passive_squad, squad.id)
-                pr("Spawned passive squad [%s] at smart terrain ID [%s]", random_squad, nearest_smart_id)
+                for member in squad:squad_members() do
+                    table.insert(active_passive_squad, {
+                        squad_id = squad.id,
+                        npc_id = member.id
+                    })
+                end
+                pr("--Spawned passive squad [%s] at smart terrain ID [%s]", random_squad, nearest_smart_id)
             else
-                pr("Failed to spawn squad at smart terrain ID [%s]", nearest_smart_id)
+                pr("! Failed to spawn squad at smart terrain ID [%s]", nearest_smart_id)
             end
         else
-            pr("No suitable smart terrain found for spawning or no squads available.")
+            pr("! No suitable smart terrain found for spawning or no squads available.")
         end
     else
-        pr("Spawn threshold reached. No more passive squads will be spawned.")
+        pr("! Spawn threshold reached. No more passive squads will be spawned.")
     end
 end
 
 
 -- functions for dev purposes only
 function on_key_press(key)
-    --[[if key == DIK_keys["DIK_I"] and enable_debug then
+    if key == DIK_keys["DIK_I"] and enable_debug then
         --shuffle_smart_ids()
         --try_to_spawn()
-        --get_spawnable_squads_report()
-        --news_manager.send_tip(db.actor, string.format("AVAILABLE SMARTS: %d  Mutant POOL: %d  MAX ACTIVE SPAWNS: %d Active Spanws: %d", count_available_smart_terrains(), #squads_to_spawn, max_active_spawns, #active_spawns), nil,nil, 3000)
-        --print_passive_fauna_data()
+        get_spawnable_squads_report()
+        news_manager.send_tip(db.actor, string.format("AVAILABLE SMARTS: %d  Mutant POOL: %d  MAX ACTIVE SPAWNS: %d Active Spanws: %d", count_available_smart_terrains(), #squads_to_spawn, max_active_spawns, #active_spawns), nil,nil, 3000)
     end
 
     if key == DIK_keys["DIK_O"] and enable_debug then
         --delete_mutants()
         --get_active_spawns_report()
-        --news_manager.send_tip(db.actor, string.format("AVAILABLE SMARTS: %d  Mutant POOL: %d  MAX ACTIVE SPAWNS: %d Active Spanws: %d", count_available_smart_terrains(), #squads_to_spawn, max_active_spawns, #active_spawns), nil,nil, 3000)
-        --spawn_passive_squads_near_actor()
-    end]]
+        news_manager.send_tip(db.actor, string.format("AVAILABLE SMARTS: %d  Mutant POOL: %d  MAX ACTIVE SPAWNS: %d Active Spanws: %d", count_available_smart_terrains(), #squads_to_spawn, max_active_spawns, #active_spawns), nil,nil, 3000)
+        print_passive_fauna_data()
+    end
 
     if key == DIK_keys["DIK_P"] and enable_debug then
         delete_mutants()
@@ -1887,7 +2017,6 @@ function on_game_start()
     add_safe_zone_indicator()
     RegisterScriptCallback("actor_on_update", actor_on_update)
     RegisterScriptCallback("actor_on_update", is_actor_safe)
-    RegisterScriptCallback("actor_on_update", retarget_vanilla_mutants)
     RegisterScriptCallback("monster_on_loot_init", monster_on_loot_init)
     RegisterScriptCallback("monster_on_death_callback", monster_on_death_callback)
     RegisterScriptCallback("server_entity_on_unregister", server_entity_on_unregister)

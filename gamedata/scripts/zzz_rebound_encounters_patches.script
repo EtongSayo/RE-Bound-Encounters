@@ -64,7 +64,8 @@ kind_to_section = {
 	["SM_HOG"]         = "hog",
 	["SM_PIG"]         = "pig",
 	["SM_ROOSTER"]     = "rooster",
-	["SM_ROTAN"]       = "rotan"
+	["SM_ROTAN"]       = "rotan",
+	["SM_SLIZEN"]       = "slizen"
 }
 
 clsid_to_section = {
@@ -145,7 +146,8 @@ clsdbg_to_section = {
 	["SM_HOG"]         = "hog",
 	["SM_PIG"]         = "pig",
 	["SM_ROOSTER"]     = "rooster",
-	["SM_ROTAN"]       = "rotan"
+	["SM_ROTAN"]       = "rotan",
+	["SM_SLIZEN"]       = "slizen"
 }
 
 killed_mutant_tbl = { -- ponney68: This table based on "species" of mutants
@@ -208,6 +210,7 @@ killed_mutant_tbl = { -- ponney68: This table based on "species" of mutants
 	pig		            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
 	rooster	            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
 	rotan	            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	slizen	            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
 	
     snork				= {file="ui\\ui_actor_monsters_pda",x="393",y="0",type="small"},
 	dog					= {file="ui\\ui_actor_monsters_pda",x="0",y="800",type="small"},
@@ -220,7 +223,6 @@ killed_mutant_tbl = { -- ponney68: This table based on "species" of mutants
 	tushkano			= {file="ui\\ui_actor_monsters_pda",x="0",y="0",type="small"},
 	rat					= {file="ui\\ui_actor_monsters_pda",x="0",y="0",type="small"},
 	flesh				= {file="ui\\ui_actor_monsters_pda",x="393",y="600",type="large"},
-	rotan				= {file="ui\\ui_actor_monsters_pda",x="0",y="0",type="human"},
 	burer				= {file="ui\\ui_actor_monsters_pda_1",x="0",y="0",type="large"},
 	boar				= {file="ui\\ui_actor_monsters_pda_1",x="393",y="0",type="large"},
 	giant				= {file="ui\\ui_actor_monsters_pda_1",x="0",y="200",type="large"},
@@ -439,7 +441,9 @@ function GetNewMonsterDescription(obj,index,sec,cls) -- monkey-patch for vanilla
 		["SM_HOG"]         = "hog",
 		["SM_PIG"]         = "pig",
 		["SM_ROOSTER"]     = "rooster",
-		["SM_ROTAN"]       = "rotan"
+		["SM_ROTAN"]       = "rotan",
+		["SM_SLIZEN"]       = "slizen"
+
 	}
 	
 	if clsid.karlik_s 	 then m_class[clsid.karlik_s] 	 = "karlik" 	end --> CoC 1.5
