@@ -147,8 +147,8 @@
 	<string id="respawn_mutant_cerb">
     <text>Cerb</text>
 	</string>
-	<string id="respawn_mutant_chicken">
-		<text>Chicken</text>
+	<string id="respawn_mutant_hen">
+		<text>Hen</text>
 	</string>
 	<string id="respawn_mutant_hog">
 		<text>Hog</text>
@@ -164,6 +164,18 @@
 	</string>
 	<string id="respawn_mutant_slizen">
 		<text>Slizen</text>
+	</string>
+	<string id="respawn_mutant_ratking">
+		<text>Ratking</text>
+	</string>
+	<string id="respawn_mutant_canid">
+		<text>Canid</text>
+	</string>
+	<string id="respawn_mutant_medwed">
+		<text>Medwed</text>
+	</string>
+	<string id="respawn_mutant_spectra">
+		<text>Spectra</text>
 	</string>
 
 

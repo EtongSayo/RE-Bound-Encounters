@@ -1100,26 +1100,26 @@
 		<text>Cerbs</text>
 	</string>
 
-	<string id="st_dyn_news_chicken_1">
-		<text>a Chicken</text>
+	<string id="st_dyn_news_hen_1">
+		<text>a Hen</text>
 	</string>
-	<string id="st_dyn_news_chicken_2">
-		<text>We were attacked by a Chicken</text>
+	<string id="st_dyn_news_hen_2">
+		<text>We were attacked by a Hen</text>
 	</string>
-	<string id="st_dyn_news_chicken_3">
-		<text>We got jumped by a Chicken</text>
+	<string id="st_dyn_news_hen_3">
+		<text>We got jumped by a Hen</text>
 	</string>
-	<string id="st_dyn_news_chicken_4">
-		<text>We were attacked by Chickens</text>
+	<string id="st_dyn_news_hen_4">
+		<text>We were attacked by Hens</text>
 	</string>
-	<string id="st_dyn_news_chicken_5">
-		<text>We got ambushed by Chickens</text>
+	<string id="st_dyn_news_hen_5">
+		<text>We got ambushed by Hens</text>
 	</string>
-	<string id="st_dyn_news_chicken_6">
-		<text>a flock of Chickens</text>
+	<string id="st_dyn_news_hen_6">
+		<text>a flock of Hens</text>
 	</string>
-	<string id="st_dyn_news_chicken_7">
-		<text>Chickens</text>
+	<string id="st_dyn_news_hen_7">
+		<text>Hens</text>
 	</string>
 
 	<string id="st_dyn_news_hog_1">
@@ -1230,6 +1230,94 @@
 	</string>
 	<string id="st_dyn_news_slizen_7">
 		<text>Slizens</text>
+	</string>
+
+	<string id="st_dyn_news_canid_1">
+		<text>a Canid</text>
+	</string>
+	<string id="st_dyn_news_canid_2">
+		<text>We were attacked by a Canid</text>
+	</string>
+	<string id="st_dyn_news_canid_3">
+		<text>We got jumped by a Canid</text>
+	</string>
+	<string id="st_dyn_news_canid_4">
+		<text>We were attacked by Canids</text>
+	</string>
+	<string id="st_dyn_news_canid_5">
+		<text>We got ambushed by Canids</text>
+	</string>
+	<string id="st_dyn_news_canid_6">
+		<text>a pack of Canids</text>
+	</string>
+	<string id="st_dyn_news_canid_7">
+		<text>Canids</text>
+	</string>
+
+	<string id="st_dyn_news_medwed_1">
+		<text>a Medwed</text>
+	</string>
+	<string id="st_dyn_news_medwed_2">
+		<text>We were attacked by a Medwed</text>
+	</string>
+	<string id="st_dyn_news_medwed_3">
+		<text>We got jumped by a Medwed</text>
+	</string>
+	<string id="st_dyn_news_medwed_4">
+		<text>We were attacked by Medweds</text>
+	</string>
+	<string id="st_dyn_news_medwed_5">
+		<text>We got ambushed by Medweds</text>
+	</string>
+	<string id="st_dyn_news_medwed_6">
+		<text>a group of Medweds</text>
+	</string>
+	<string id="st_dyn_news_medwed_7">
+		<text>Medweds</text>
+	</string>
+
+	<string id="st_dyn_news_ratking_1">
+		<text>a Ratking</text>
+	</string>
+	<string id="st_dyn_news_ratking_2">
+		<text>We were attacked by a Ratking</text>
+	</string>
+	<string id="st_dyn_news_ratking_3">
+		<text>We got jumped by a Ratking</text>
+	</string>
+	<string id="st_dyn_news_ratking_4">
+		<text>We were attacked by Ratkings</text>
+	</string>
+	<string id="st_dyn_news_ratking_5">
+		<text>We got ambushed by Ratkings</text>
+	</string>
+	<string id="st_dyn_news_ratking_6">
+		<text>a swarm of Ratkings</text>
+	</string>
+	<string id="st_dyn_news_ratking_7">
+		<text>Ratkings</text>
+	</string>
+
+	<string id="st_dyn_news_spectra_1">
+		<text>a Spectra</text>
+	</string>
+	<string id="st_dyn_news_spectra_2">
+		<text>We were attacked by a Spectra</text>
+	</string>
+	<string id="st_dyn_news_spectra_3">
+		<text>We got jumped by a Spectra</text>
+	</string>
+	<string id="st_dyn_news_spectra_4">
+		<text>We were attacked by Spectras</text>
+	</string>
+	<string id="st_dyn_news_spectra_5">
+		<text>We got ambushed by Spectras</text>
+	</string>
+	<string id="st_dyn_news_spectra_6">
+		<text>a cluster of Spectras</text>
+	</string>
+	<string id="st_dyn_news_spectra_7">
+		<text>Spectras</text>
 	</string>
 
 </string_table>
