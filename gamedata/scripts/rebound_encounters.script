@@ -8,13 +8,14 @@
 
 -- Define constants for magic numbers
 
+
 local in_game_hour_multiplier = 60
 
 local MAX_SMART_ID = 65534
 
 -- MCM values
-local spawn_time_delay_min = 4    -- Minimum game minute delay for the spawn interval
-local spawn_time_delay_max = 8    -- Maximum game minute delay for the spawn interval
+local spawn_time_delay_min = 2    -- Minimum game minute delay for the spawn interval
+local spawn_time_delay_max = 6    -- Maximum game minute delay for the spawn interval
 local safe_radius = 60             -- No spawning within this player's radius
 local enable_spawn_reserve = false -- toggles smart population reserving
 local enable_ignore_smart_population = false -- toggles smart population ignored during spawning
@@ -54,7 +55,7 @@ local mutant_id_attacked = {}
 
 
 -- time management
-local xspawn_time = nil
+local respawn_delay = nil
 local marked_times = {} -- table for unified time management
 
 -- Define a timer variable and a delay duration
@@ -117,8 +118,13 @@ function fetch_values()
     elseif difficulty_level == 3 then -- Master
         difficulty_value = tonumber(read_ltx_section(plugin_file_name,"spawn_difficulty","master"))
     end
-        
+    
     collect_squads_to_spawn()
+    if is_day() then
+        respawn_delay = math.random(in_game_hour_multiplier, (in_game_hour_multiplier * math.random(spawn_time_delay_min, spawn_time_delay_max)))
+    else
+        respawn_delay = math.random(in_game_hour_multiplier, (in_game_hour_multiplier * (math.random(spawn_time_delay_min, spawn_time_delay_max)/2)))
+    end
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -145,7 +151,6 @@ end
 
 -- Function to attempt spawning mutants
 function try_to_spawn()
-    fetch_values()
     local is_map_exempt = false
     local current_map_name = tostring(level.name())
     for index, map_name in pairs(map_exemptions) do         -- Check if the current map is meant to be exempt from spawns
@@ -375,17 +380,18 @@ function spawn_mutants()
                             end
                         else
                             local actor_rank_value = get_rank_value(db.actor:character_rank()) -- rank value
-                            local squad_size_by_level = tonumber(read_ltx_section(plugin_file_name, "squad_size_by_level", level.name()))
+                            local squad_size_by_level = tonumber(read_ltx_section(plugin_file_name, "squad_size_by_level", level.name())) or 3 -- set hayzed squad size by level or default to 3 if not specified
                             if squad:section_name() == "respawn_hayzed" then
                                 add_squad_members(squad, squad_size_by_level)
                             else
                                 if squad:npc_count() < actor_rank_value then
-                                    local half_squad = half_max_squad_size(actor_rank_value)
-                                    add_squad_members(squad, half_squad)
+                                    if check_ltx_contains_value(plugin_file_name, "normal_mutants", squad:section_name()) or check_ltx_contains_value(plugin_file_name, "weak_mutants", squad:section_name()) then -- check if squad is weak or normal tier
+                                        local half_squad = half_max_squad_size(actor_rank_value)
+                                        add_squad_members(squad, half_squad)
+                                    end
                                 end
                             end
                         end
-
                         -- Set has_spawned to true and exit loops to stop further spawning attempts
                         has_spawned = true
                         break
@@ -583,6 +589,20 @@ function get_list_from_ltx(file_name, section_name)
     end
 
     return result -- Return the collected list
+end
+
+function check_ltx_contains_value(filename, section, target_value)
+    local ini = ini_file(filename)
+    if not ini then return false end -- Handle file not found
+
+    local line_count = ini:line_count(section)
+    for i = 0, line_count - 1 do
+        local _, _, value = ini:r_line_ex(section, i, "", "")
+        if value and value == target_value then
+            return true -- Target value found
+        end
+    end
+    return false -- Target value not found
 end
 
 -- Collect passive squads to spawn on current level
@@ -823,7 +843,7 @@ function save_state(m_data)
     m_data.boss_mutant_squad_npcs = boss_mutant_squad_npcs
     m_data.squads_to_spawn = squads_to_spawn
     m_data.available_smart_terrains = available_smart_terrains
-    m_data.xspawn_time = xspawn_time
+    m_data.respawn_delay = respawn_delay
     m_data.active_boss_mutant = active_boss_mutant
     m_data.active_passive_squad = active_passive_squad
 end
@@ -835,7 +855,7 @@ function load_state(m_data)
     boss_mutant_squad_npcs = m_data.boss_mutant_squad_npcs or {}
     squads_to_spawn = m_data.squads_to_spawn or {}
     available_smart_terrains = m_data.available_smart_terrains or {}
-    xspawn_time = m_data.xspawn_time
+    respawn_delay = m_data.respawn_delay
     active_boss_mutant = m_data.active_boss_mutant or 0
     active_passive_squad = m_data.active_passive_squad or {}
 end
@@ -896,8 +916,8 @@ end
 
 -- requires demonized_geometry_ray.script to work
 function is_actor_safe()
-    if game_timer("check", 6) < 6 then return end
-    game_timer("mark", 6)
+    if game_timer("check", 7) < 1 then return end
+    game_timer("mark", 7)
 
     local surge_state = GetEvent("surge", "state")
 	local psi_storm_state = GetEvent("psi_storm", "state")
@@ -1139,19 +1159,15 @@ function count_available_smart_terrains()
 end
 -- 
 function actor_on_first_update()
-
+    fetch_values()
     if is_day() then
-        xspawn_time = (math.random(spawn_time_delay_min, spawn_time_delay_max) * in_game_hour_multiplier)
+        respawn_delay = (math.random(spawn_time_delay_min, spawn_time_delay_max) * in_game_hour_multiplier)
     else
-        xspawn_time = (math.random(spawn_time_delay_min, spawn_time_delay_max) * (in_game_hour_multiplier/2))
+        respawn_delay = (math.random(spawn_time_delay_min, spawn_time_delay_max) * (in_game_hour_multiplier/2))
     end
 
-    if game_timer("initialize", 6) then
-        pr("Timers initialized")
-    end
     load_smart_terrain_exemptions()
     save_respawn_smarts()
-    collect_passive_squad_sections()
 
     init_ray_table()
 
@@ -1161,6 +1177,8 @@ function actor_on_first_update()
         shuffle_smart_ids() -- reshuffle smart id order
         try_to_spawn()
     end
+    
+    spawn_passive_squads_near_actor()
 end
 
 -- Function to check for active boss squads and store their NPC IDs
@@ -1249,7 +1267,7 @@ end
 
 function actor_on_update()
 
-    if game_timer("check", 1) >= xspawn_time then -- main spawning loop
+    if game_timer("check", 1) >= respawn_delay then -- main spawning loop
         shuffle_smart_ids()
         try_to_spawn()
         if math.random() <= 0.6 then
@@ -1257,38 +1275,45 @@ function actor_on_update()
         end
 
         if is_day() then
-            xspawn_time = (math.random(spawn_time_delay_min, spawn_time_delay_max) * in_game_hour_multiplier)
+            respawn_delay = math.random(in_game_hour_multiplier, (in_game_hour_multiplier * math.random(spawn_time_delay_min, spawn_time_delay_max)))
         else
-            xspawn_time = (math.random(spawn_time_delay_min, spawn_time_delay_max) * (in_game_hour_multiplier/2))
-        end
+            respawn_delay = math.random(in_game_hour_multiplier, (in_game_hour_multiplier * (math.random(spawn_time_delay_min, spawn_time_delay_max)/2)))
+        end    
         game_timer("mark", 1)
     end
 
-    if game_timer("check", 2) >= passive_spawn_delay then -- for spawning passive fauna
+    if game_timer("check", 2) >= 5 then -- despawn passives that wandered too far
+        despawn_distant_passive_fauna()
+        game_timer("mark", 2)
+    end
+
+    if game_timer("check", 3) >= passive_spawn_delay then -- for spawning passive fauna
         pr("-- Spawning Passive Fauna")
         despawn_distant_passive_fauna()
         spawn_passive_squads_near_actor()
-        game_timer("mark", 2)
+        game_timer("mark", 3)
         passive_spawn_delay = math.floor(math.random(15, 60))
     end
     
-    if game_timer("check", 3) >= 30 then -- for retargeting vanilla mutants
+    if game_timer("check", 4) >= 30 then -- for retargeting vanilla mutants
         pr("-- Retargeting Vanilla Mutants")
         retarget_vanilla_mutants()
-        game_timer("mark", 3)
-    end
-
-    if game_timer("check", 4) >= 30 then -- for retargeting non-predator mutants
-        pr("-- Retargeting Non-Predator Mutants")
-        assign_random_smart_target()
         game_timer("mark", 4)
     end
 
-    if game_timer("check", 5) >= 30 then -- for retargeting passive fauna
-        pr("-- Retargeting Passive Fauna")
-        retarget_passive_fauna()
+    if game_timer("check", 5) >= 30 then -- for retargeting non-predator mutants
+        pr("-- Retargeting Non-Predator Mutants")
+        assign_random_smart_target()
         game_timer("mark", 5)
     end
+
+    if game_timer("check", 6) >= 30 then -- for retargeting passive fauna
+        pr("-- Retargeting Passive Fauna")
+        retarget_passive_fauna()
+        game_timer("mark", 6)
+    end
+
+    --show_move_state()
 end
 
 function game_timer(state, id)
@@ -1417,25 +1442,17 @@ function add_attacked_npc_id(npc)
         local npc_id = npc:id()
         local game_time = game.get_game_time()
 
-        local Y, M, D, h, m, s, ms = 0, 0, 0, 0, 0, 0, 0
-        Y, M, D, h, m, s, ms = game_time:get(Y, M, D, h, m, s, ms)
-
-        -- Format the game time (customize as needed)
-        local formatted_time = string.format("%02d:%02d:%02d", h, m, s)
-
         local found = false
         for i, entry in ipairs(mutant_id_attacked) do
             if entry.npc_id == npc_id then
                 entry.game_time = game_time -- Store the actual time object
                 found = true
-                pr("NPC ID [%s] game time updated to [%s] in mutant_id_attacked table.", npc_id, formatted_time)
                 break
             end
         end
 
         if not found then
             table.insert(mutant_id_attacked, { npc_id = npc_id, game_time = game_time })
-            pr("Added NPC ID [%s] at game time [%s] to mutant_id_attacked table.", npc_id, formatted_time)
         end
     else
         pr("Warning: Invalid NPC object provided to add_attacked_npc_id()")
@@ -1722,6 +1739,8 @@ function get_active_spawns_report()
     pr("Current Level: " .. level.name())
     pr("Active Spawns:")
     local active_boss_mutant_count = 0
+    local time_since_last_check = game_timer("check", 1)
+
     for _, spawn in ipairs(active_spawns) do
         local spawn_info = {
             mutant_id = spawn.mutant_id,
@@ -1737,6 +1756,8 @@ function get_active_spawns_report()
         end
         pr("  - Mutant ID: " .. spawn_info.mutant_id .. ", Level: " .. spawn_info.level_name .. ", Sec: " .. spawn_info.sec .. ", is_night_mutant=" .. tostring(spawn_info.is_night_mutant) .. ", is_boss_mutant=" .. tostring(spawn_info.is_boss_mutant) .. ", is_predator_mutant=" .. tostring(spawn_info.is_predator_mutant) .. ", Smart ID: " .. spawn_info.smart_id)
     end
+    pr("Minutes since last spawn check: " .. time_since_last_check)
+    pr("Respawn delay (minutes): " .. respawn_delay) -- Added line to show respawn_delay
 end
 
 -- Function to determine rank description based on player_rank value
@@ -2021,7 +2042,7 @@ end
 
 function spawn_passive_squads_near_actor()
     local smart_terrain_ids = get_all_smart_terrain_ids_current_level()
-
+    collect_passive_squad_sections()
     local spawn_threshold = 3
 
     if active_passive_squad and (#active_passive_squad < spawn_threshold) then
@@ -2082,6 +2103,14 @@ function on_key_press(key)
         news_manager.send_tip(db.actor, string.format("All active spawns deleted. Saving your game now will make it free from all RE:Spawn mutants. ACTIVE SPAWNS: %d", #active_spawns), nil,nil, 3000)
     end
 
+end
+
+function show_move_state()
+    if enable_debug then
+        local move_state = IsMoveState("mcAnyMove")
+        local move_state_string = move_state and "true" or "false"
+        actor_menu.set_msg(1, "Move State: " .. move_state_string, 2)
+    end
 end
 
 -- Initialize the script on game start
