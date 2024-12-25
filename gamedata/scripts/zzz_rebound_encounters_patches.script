@@ -69,8 +69,12 @@ kind_to_section = {
 	["SM_CANID"]        = "canid",
 	["SM_MEDWED"]       = "medwed",
 	["SM_RATKING"]      = "ratking",
-	["SM_SPECTRA"]      = "spectra"
-
+	["SM_SPECTRA"]      = "spectra",
+	["SM_BEAR"]         = "bear",
+	["SM_DEER"]         = "deer",
+	["SM_FOX"]          = "fox",
+	["SM_SHEPHERD"]     = "shepherd",
+	["SM_BIRYUK"]       = "biryuk",
 	
 }
 
@@ -157,7 +161,14 @@ clsdbg_to_section = {
 	["SM_CANID"]        = "canid",
 	["SM_MEDWED"]       = "medwed",
 	["SM_RATKING"]      = "ratking",
-	["SM_SPECTRA"]      = "spectra"
+	["SM_SPECTRA"]      = "spectra",
+	["SM_BEAR"]         = "bear",
+	["SM_DEER"]         = "deer",
+	["SM_FOX"]          = "fox",
+	["SM_SHEPHERD"]     = "shepherd",
+	["SM_BIRYUK"]       = "biryuk",
+
+
 
 }
 
@@ -226,7 +237,11 @@ killed_mutant_tbl = { -- ponney68: This table based on "species" of mutants
 	medwed             = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
 	ratking            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
 	spectra            = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
-
+	bear               = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	deer               = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	fox                = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	shepherd           = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
+	biryuk             = {file="ui\\ui_actor_monsters_pda_blank", x="0", y="0", type="small"},
 	
     snork				= {file="ui\\ui_actor_monsters_pda",x="393",y="0",type="small"},
 	dog					= {file="ui\\ui_actor_monsters_pda",x="0",y="800",type="small"},
@@ -462,7 +477,14 @@ function GetNewMonsterDescription(obj,index,sec,cls) -- monkey-patch for vanilla
 		["SM_CANID"]        = "canid",
 		["SM_MEDWED"]       = "medwed",
 		["SM_RATKING"]      = "ratking",
-		["SM_SPECTRA"]      = "spectra"
+		["SM_SPECTRA"]      = "spectra",
+		["SM_BEAR"]         = "bear",
+		["SM_DEER"]         = "deer",
+		["SM_FOX"]          = "fox",
+		["SM_SHEPHERD"]     = "shepherd",
+		["SM_BIRYUK"]       = "biryuk",
+
+
 
 
 	}

@@ -75,6 +75,8 @@ local passive_fauna = {}
 local active_passive_squad = {}
 local passive_spawn_delay = 10
 
+local special_spawns = {}
+
 
 local map_exemptions = 
 {
@@ -382,7 +384,7 @@ function spawn_mutants()
                             local actor_rank_value = get_rank_value(db.actor:character_rank()) -- rank value
                             local squad_size_by_level = tonumber(read_ltx_section(plugin_file_name, "squad_size_by_level", level.name())) or 3 -- set hayzed squad size by level or default to 3 if not specified
                             if squad:section_name() == "respawn_hayzed" then
-                                add_squad_members(squad, squad_size_by_level)
+                                add_squad_members(squad, squad_size_by_level, selected_smart_id)
                             else
                                 if squad:npc_count() < actor_rank_value then
                                     if check_ltx_contains_value(plugin_file_name, "normal_mutants", squad:section_name()) or check_ltx_contains_value(plugin_file_name, "weak_mutants", squad:section_name()) then -- check if squad is weak or normal tier
@@ -407,7 +409,7 @@ function half_max_squad_size(max_squad_size)
     return math.floor(max_squad_size / 2)
   end
 
-function add_squad_members(squad, max_squad_size)
+function add_squad_members(squad, max_squad_size, smart_id)
     local max_squad_count
     local squad_count = squad:npc_count()
     max_squad_count = math.random(squad_count, max_squad_size)
@@ -420,11 +422,9 @@ function add_squad_members(squad, max_squad_size)
             local lvid = commander.m_level_vertex_id
             local gvid = commander.m_game_vertex_id
 
-            local squad_smart = squad.smart_id and SIMBOARD.smarts[squad.smart_id].smrt
-            if not squad_smart then return end
+            local squad_smart = smart_id and SIMBOARD.smarts[smart_id].smrt
 
             local random_spawn = ini_sys:r_string_ex(squad:section_name(), "npc_random")
-            if not random_spawn then return end
 
             random_spawn = parse_names(random_spawn)
             local random_sec = random_spawn[math.random(1, #random_spawn)]
@@ -871,6 +871,42 @@ end
 -- Check to see if an emission or psy storm is active
 function surge_started()
     return surge_manager.is_loaded() and surge_manager.is_started() or psi_storm_manager.is_loaded() and psi_storm_manager.is_started()
+end
+
+function special_event_started()
+    local blood_moon_active = false
+    local crawling_mist_active = false
+
+    if blood_moon_manager then
+        blood_moon_active = blood_moon_manager.is_loaded and blood_moon_manager.is_started()
+    end
+
+    if crawling_mist_manager then
+        crawling_mist_active = crawling_mist_manager.is_loaded and crawling_mist_manager.is_started()
+    end
+
+    if blood_moon_active or crawling_mist_active then
+        special_spawns = {
+            "hayzed_weak",
+            "hayzed_normal",
+            "hayzed_strong",
+            "lady_weak",
+            "lady_normal",
+            "lady_strong",
+            "skyrim_male",
+            "skyrim_female",
+            "mizgir_weak",
+            "mizgir_normal",
+            "mizgir_strong",
+            "vebber_weak",
+            "vebber_normal",
+            "vebber_strong"
+        }
+        return true
+    else
+        special_spawns = {}
+        return false
+    end
 end
 
 -- Function to load smart terrain exemptions from rebound_encounters.ltx
@@ -1881,6 +1917,30 @@ function on_enemy_eval(npc, enemy, flags)
     end
 end
 
+function force_rush_to_target(npc, enemy, flags)
+    local function matches_section(section)
+        for _, value in ipairs(special_spawns) do
+            if section == value then
+                return true
+            end
+        end
+        return false
+    end
+
+    if special_event_started() then
+        if is_safe_zone == false then
+            if matches_section(npc:section())  and (enemy:id() ~= "actor") then
+                local far_from_actor = (npc:position():distance_to(db.actor:position()) > 15)
+                if far_from_actor then
+                    pr("! NPC is too far from actor")
+                    flags.override = true  -- Prevent attack
+                    flags.ret_value = false
+                end
+            end
+        end
+    end
+end
+
 function add_safe_zone_indicator()
     actor_status.add_indicator("SafeZone", {
         index = 14,  -- Use a unique index
@@ -2132,4 +2192,5 @@ function on_game_start()
     RegisterScriptCallback("on_key_press", on_key_press)
     RegisterScriptCallback("anomaly_on_before_activate", anomaly_on_before_activate)
     RegisterScriptCallback("on_enemy_eval", on_enemy_eval)
+    RegisterScriptCallback("on_enemy_eval", force_rush_to_target)
 end

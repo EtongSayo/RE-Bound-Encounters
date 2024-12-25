@@ -177,6 +177,23 @@
 	<string id="respawn_mutant_spectra">
 		<text>Spectra</text>
 	</string>
+	<string id="respawn_mutant_bear">
+	<text>Bear</text>
+	</string>
+	<string id="respawn_mutant_deer">
+		<text>Deer</text>
+	</string>
+	<string id="respawn_mutant_fox">
+		<text>Fox</text>
+	</string>
+	<string id="respawn_mutant_shepherd">
+		<text>Shepherd</text>
+	</string>
+	<string id="respawn_mutant_biryuk">
+		<text>Biryuk</text>
+	</string>
+
+
 
 
 

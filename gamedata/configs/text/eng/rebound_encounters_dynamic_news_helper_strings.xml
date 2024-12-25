@@ -1320,4 +1320,114 @@
 		<text>Spectras</text>
 	</string>
 
+	<string id="st_dyn_news_bear_1">
+		<text>a Bear</text>
+	</string>
+	<string id="st_dyn_news_bear_2">
+		<text>We were attacked by a Bear</text>
+	</string>
+	<string id="st_dyn_news_bear_3">
+		<text>We got jumped by a Bear</text>
+	</string>
+	<string id="st_dyn_news_bear_4">
+		<text>We were attacked by Bears</text>
+	</string>
+	<string id="st_dyn_news_bear_5">
+		<text>We got ambushed by Bears</text>
+	</string>
+	<string id="st_dyn_news_bear_6">
+		<text>a cluster of Bears</text>
+	</string>
+	<string id="st_dyn_news_bear_7">
+		<text>Bears</text>
+	</string>
+
+	<string id="st_dyn_news_deer_1">
+		<text>a Deer</text>
+	</string>
+	<string id="st_dyn_news_deer_2">
+		<text>We encountered a Deer</text>
+	</string>
+	<string id="st_dyn_news_deer_3">
+		<text>We saw a Deer</text>
+	</string>
+	<string id="st_dyn_news_deer_4">
+		<text>We encountered Deer</text>
+	</string>
+	<string id="st_dyn_news_deer_5">
+		<text>We saw Deer</text>
+	</string>
+	<string id="st_dyn_news_deer_6">
+		<text>a herd of Deer</text>
+	</string>
+	<string id="st_dyn_news_deer_7">
+		<text>Deer</text>
+	</string>
+
+	<string id="st_dyn_news_fox_1">
+		<text>a Fox</text>
+	</string>
+	<string id="st_dyn_news_fox_2">
+		<text>We were stalked by a Fox</text>
+	</string>
+	<string id="st_dyn_news_fox_3">
+		<text>We spotted a Fox</text>
+	</string>
+	<string id="st_dyn_news_fox_4">
+		<text>We were stalked by Foxes</text>
+	</string>
+	<string id="st_dyn_news_fox_5">
+		<text>We saw Foxes</text>
+	</string>
+	<string id="st_dyn_news_fox_6">
+		<text>a pack of Foxes</text>
+	</string>
+	<string id="st_dyn_news_fox_7">
+		<text>Foxes</text>
+	</string>
+
+	<string id="st_dyn_news_shepherd_1">
+		<text>a Shepherd</text>
+	</string>
+	<string id="st_dyn_news_shepherd_2">
+		<text>We were attacked by a Shepherd</text>
+	</string>
+	<string id="st_dyn_news_shepherd_3">
+		<text>We got jumped by a Shepherd</text>
+	</string>
+	<string id="st_dyn_news_shepherd_4">
+		<text>We were attacked by Shepherds</text>
+	</string>
+	<string id="st_dyn_news_shepherd_5">
+		<text>We got ambushed by Shepherds</text>
+	</string>
+	<string id="st_dyn_news_shepherd_6">
+		<text>a pack of Shepherds</text>
+	</string>
+	<string id="st_dyn_news_shepherd_7">
+		<text>Shepherds</text>
+	</string>
+
+	<string id="st_dyn_news_biryuk_1">
+		<text>a Biryuk</text>
+	</string>
+	<string id="st_dyn_news_biryuk_2">
+		<text>We were attacked by a Biryuk</text>
+	</string>
+	<string id="st_dyn_news_biryuk_3">
+		<text>We got jumped by a Biryuk</text>
+	</string>
+	<string id="st_dyn_news_biryuk_4">
+		<text>We were attacked by Biryuks</text>
+	</string>
+	<string id="st_dyn_news_biryuk_5">
+		<text>We got ambushed by Biryuks</text>
+	</string>
+	<string id="st_dyn_news_biryuk_6">
+		<text>a pack of Biryuks</text>
+	</string>
+	<string id="st_dyn_news_biryuk_7">
+		<text>Biryuks</text>
+	</string>
+
 </string_table>
