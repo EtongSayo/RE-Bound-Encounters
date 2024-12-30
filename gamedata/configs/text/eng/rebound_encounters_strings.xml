@@ -174,8 +174,8 @@
 	<string id="respawn_mutant_medwed">
 		<text>Medwed</text>
 	</string>
-	<string id="respawn_mutant_spectra">
-		<text>Spectra</text>
+	<string id="respawn_mutant_spectre">
+		<text>Spectre</text>
 	</string>
 	<string id="respawn_mutant_bear">
 	<text>Bear</text>
@@ -192,6 +192,22 @@
 	<string id="respawn_mutant_biryuk">
 		<text>Biryuk</text>
 	</string>
+	<string id="respawn_mutant_bibliotekar">
+		<text>Bibliotekar</text>
+	</string>
+	<string id="respawn_mutant_borya">
+		<text>Borya</text>
+	</string>
+	<string id="respawn_mutant_jumper">
+		<text>Jumper</text>
+	</string>
+	<string id="respawn_mutant_karlik">
+		<text>Karlik</text>
+	</string>
+	<string id="respawn_mutant_psysucker">
+		<text>Psysucker</text>
+	</string>
+
 
 
 

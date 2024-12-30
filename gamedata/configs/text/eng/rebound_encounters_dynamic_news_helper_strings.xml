@@ -1298,26 +1298,26 @@
 		<text>Ratkings</text>
 	</string>
 
-	<string id="st_dyn_news_spectra_1">
-		<text>a Spectra</text>
+	<string id="st_dyn_news_spectre_1">
+		<text>a Spectre</text>
 	</string>
-	<string id="st_dyn_news_spectra_2">
-		<text>We were attacked by a Spectra</text>
+	<string id="st_dyn_news_spectre_2">
+		<text>We were attacked by a Spectre</text>
 	</string>
-	<string id="st_dyn_news_spectra_3">
-		<text>We got jumped by a Spectra</text>
+	<string id="st_dyn_news_spectre_3">
+		<text>We got jumped by a Spectre</text>
 	</string>
-	<string id="st_dyn_news_spectra_4">
-		<text>We were attacked by Spectras</text>
+	<string id="st_dyn_news_spectre_4">
+		<text>We were attacked by Spectres</text>
 	</string>
-	<string id="st_dyn_news_spectra_5">
-		<text>We got ambushed by Spectras</text>
+	<string id="st_dyn_news_spectre_5">
+		<text>We got ambushed by Spectres</text>
 	</string>
-	<string id="st_dyn_news_spectra_6">
-		<text>a cluster of Spectras</text>
+	<string id="st_dyn_news_spectre_6">
+		<text>a cluster of Spectres</text>
 	</string>
-	<string id="st_dyn_news_spectra_7">
-		<text>Spectras</text>
+	<string id="st_dyn_news_spectre_7">
+		<text>Spectres</text>
 	</string>
 
 	<string id="st_dyn_news_bear_1">
@@ -1428,6 +1428,116 @@
 	</string>
 	<string id="st_dyn_news_biryuk_7">
 		<text>Biryuks</text>
+	</string>
+
+	<string id="st_dyn_news_bibliotekar_1">
+		<text>a Bibliotekar</text>
+	</string>
+	<string id="st_dyn_news_bibliotekar_2">
+		<text>We were attacked by a Bibliotekar</text>
+	</string>
+	<string id="st_dyn_news_bibliotekar_3">
+		<text>We got jumped by a Bibliotekar</text>
+	</string>
+	<string id="st_dyn_news_bibliotekar_4">
+		<text>We were attacked by Bibliotekars</text>
+	</string>
+	<string id="st_dyn_news_bibliotekar_5">
+		<text>We got ambushed by Bibliotekars</text>
+	</string>
+	<string id="st_dyn_news_bibliotekar_6">
+		<text>a pack of Bibliotekars</text>
+	</string>
+	<string id="st_dyn_news_bibliotekar_7">
+		<text>Bibliotekars</text>
+	</string>
+
+	<string id="st_dyn_news_borya_1">
+		<text>a Borya</text>
+	</string>
+	<string id="st_dyn_news_borya_2">
+		<text>We were attacked by a Borya</text>
+	</string>
+	<string id="st_dyn_news_borya_3">
+		<text>We got jumped by a Borya</text>
+	</string>
+	<string id="st_dyn_news_borya_4">
+		<text>We were attacked by Boryas</text>
+	</string>
+	<string id="st_dyn_news_borya_5">
+		<text>We got ambushed by Boryas</text>
+	</string>
+	<string id="st_dyn_news_borya_6">
+		<text>a pack of Boryas</text>
+	</string>
+	<string id="st_dyn_news_borya_7">
+		<text>Boryas</text>
+	</string>
+
+	<string id="st_dyn_news_jumper_1">
+		<text>a Jumper</text>
+	</string>
+	<string id="st_dyn_news_jumper_2">
+		<text>We were attacked by a Jumper</text>
+	</string>
+	<string id="st_dyn_news_jumper_3">
+		<text>We got jumped by a Jumper</text>
+	</string>
+	<string id="st_dyn_news_jumper_4">
+		<text>We were attacked by Jumpers</text>
+	</string>
+	<string id="st_dyn_news_jumper_5">
+		<text>We got ambushed by Jumpers</text>
+	</string>
+	<string id="st_dyn_news_jumper_6">
+		<text>a pack of Jumpers</text>
+	</string>
+	<string id="st_dyn_news_jumper_7">
+		<text>Jumpers</text>
+	</string>
+
+	<string id="st_dyn_news_karlik_1">
+		<text>a Karlik</text>
+	</string>
+	<string id="st_dyn_news_karlik_2">
+		<text>We were attacked by a Karlik</text>
+	</string>
+	<string id="st_dyn_news_karlik_3">
+		<text>We got jumped by a Karlik</text>
+	</string>
+	<string id="st_dyn_news_karlik_4">
+		<text>We were attacked by Karliks</text>
+	</string>
+	<string id="st_dyn_news_karlik_5">
+		<text>We got ambushed by Karliks</text>
+	</string>
+	<string id="st_dyn_news_karlik_6">
+		<text>a pack of Karliks</text>
+	</string>
+	<string id="st_dyn_news_karlik_7">
+		<text>Karliks</text>
+	</string>
+
+	<string id="st_dyn_news_psysucker_1">
+		<text>a Psysucker</text>
+	</string>
+	<string id="st_dyn_news_psysucker_2">
+		<text>We were attacked by a Psysucker</text>
+	</string>
+	<string id="st_dyn_news_psysucker_3">
+		<text>We got jumped by a Psysucker</text>
+	</string>
+	<string id="st_dyn_news_psysucker_4">
+		<text>We were attacked by Psysuckers</text>
+	</string>
+	<string id="st_dyn_news_psysucker_5">
+		<text>We got ambushed by Psysuckers</text>
+	</string>
+	<string id="st_dyn_news_psysucker_6">
+		<text>a pack of Psysuckers</text>
+	</string>
+	<string id="st_dyn_news_psysucker_7">
+		<text>Psysuckers</text>
 	</string>
 
 </string_table>

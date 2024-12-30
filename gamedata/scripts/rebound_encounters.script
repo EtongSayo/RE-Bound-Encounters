@@ -1908,8 +1908,8 @@ function on_enemy_eval(npc, enemy, flags)
                 remove_attacked_npc_id(npc) -- Remove entry from attacked list
             end
         else
-            flags.override = true  -- Prevent first attack
-            flags.ret_value = false
+                flags.override = true  -- Prevent first attack
+                flags.ret_value = false
         end
     else
         flags.override = false
@@ -1932,7 +1932,6 @@ function force_rush_to_target(npc, enemy, flags)
             if matches_section(npc:section())  and (enemy:id() ~= "actor") then
                 local far_from_actor = (npc:position():distance_to(db.actor:position()) > 15)
                 if far_from_actor then
-                    pr("! NPC is too far from actor")
                     flags.override = true  -- Prevent attack
                     flags.ret_value = false
                 end
