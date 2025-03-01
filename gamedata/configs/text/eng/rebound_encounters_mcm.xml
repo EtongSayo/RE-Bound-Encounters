@@ -59,6 +59,10 @@
     <string id="ui_mcm_rebound_encounters_enable_spawn_reserve">
         <text>Ensure slots are consistently reserved on Smarts (lesser spawns)</text>
     </string>
+
+     <string id="ui_mcm_rebound_encounters_enable_goodwill_penalty">
+        <text>Enable goodwill penalty on killing a passive creature from RE:Spawn Pack E</text>
+    </string>
     
     <string id="ui_mcm_rebound_encounters_enable_debug">
         <text>Enable Debug</text>

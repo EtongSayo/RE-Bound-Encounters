@@ -11,6 +11,7 @@ local defaults = {
     ["enable_all_maps_spawning"] = true,
     ["enable_boss_is_night_only"] = true,
     ["enable_spawn_reserve"] = false,
+    ["enable_goodwill_penalty"] = true,
     ["enable_debug"] = false,
 }
 
@@ -43,6 +44,7 @@ function on_mcm_load()
             { id = "enable_all_maps_spawning", type = "check", val = 1, def = true },
             { id = "enable_boss_is_night_only", type = "check", val = 1, def = true },
             { id = "enable_spawn_reserve", type = "check", val = 1, def = false },
+            { id = "enable_goodwill_penalty", type = "check", val = 1, def = true },
             { id = "line2", type = "line" },
             { id = "enable_debug", type = "check", val = 1, def = false },
             {id = "desc", type = "desc", text= "ui_mcm_rebound_encounters_delete_mutants_instructions", clr = {255,180,180,180}},

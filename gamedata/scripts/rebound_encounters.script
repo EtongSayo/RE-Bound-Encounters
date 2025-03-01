@@ -25,9 +25,11 @@ local day_start = 6                -- Time at which mutants start to spawn
 local day_end = 20                 -- Deletes all mutants at this time (Skipping this time by sleeping will not delete mutants)
 local active_boss_mutant = 0      -- Number of active boss mutant spawn squads
 local spawn_reserve = 1            -- always reserve this number of slots on a smart for other scripts to spawn
+local enable_goodwill_penalty = true
 
 
 local boss_spawn_probability = 30  -- Probability check for boss spawns to be successful
+local boss_spawn_attempted = 0
 local predator_spawn_probability = 20
 local wipe_mutants_on_level_change = true -- self explanatory
 local enable_debug = false
@@ -67,7 +69,7 @@ local previous_attacker_name = ""
 local number_of_spawn_attempts = 0
 local plugin_file_name = "plugins\\rebound_encounters.ltx"
 local difficulty_value = 0
-local difficulty_level = ""
+local difficulty_level = 0
 local squads_avaiable_this_rank = {}
 local passives_available = {}
 local passives_to_spawn = {}
@@ -99,6 +101,7 @@ function fetch_values()
     enable_all_maps_spawning = rebound_encounters_mcm.get_config("enable_all_maps_spawning")
     enable_boss_is_night_only = rebound_encounters_mcm.get_config("enable_boss_is_night_only")
     enable_spawn_reserve = rebound_encounters_mcm.get_config("enable_spawn_reserve")
+    enable_goodwill_penalty = rebound_encounters_mcm.get_config("enable_goodwill_penalty")
     enable_debug = rebound_encounters_mcm.get_config("enable_debug")
 
     if enable_spawn_reserve then
@@ -109,16 +112,14 @@ function fetch_values()
 
     difficulty_level = level.get_game_difficulty()
     
-    local difficulty_value = nil
-
     if difficulty_level == 0 then -- Novice
-        difficulty_value = tonumber(read_ltx_section(plugin_file_name,"spawn_difficulty","novice"))
+        difficulty_value = 0.3
     elseif difficulty_level == 1 then -- Stalker
-        difficulty_value = tonumber(read_ltx_section(plugin_file_name,"spawn_difficulty","stalker"))
+        difficulty_value = 0.4
     elseif difficulty_level == 2 then -- Veteran
-        difficulty_value = tonumber(read_ltx_section(plugin_file_name,"spawn_difficulty","veteran"))
+        difficulty_value = 0.5
     elseif difficulty_level == 3 then -- Master
-        difficulty_value = tonumber(read_ltx_section(plugin_file_name,"spawn_difficulty","master"))
+        difficulty_value = 0.6
     end
     
     collect_squads_to_spawn()
@@ -230,11 +231,13 @@ function try_to_spawn()
             local current_active_spawns = #active_spawns
             if current_active_spawns >= max_active_spawns then
                 pr("Maximum active spawns reached: %s", count_available_smart_terrains())
+                break
             else
                 spawn_mutants()  -- Call function to spawn mutants 
             end
         end
     end
+    boss_spawn_attempted = 0 -- reset the flag for boss spawn attempt
     -- End of checks
 
     -- Print total count of active spawns after spawning
@@ -330,9 +333,11 @@ function spawn_mutants()
                     local squad_sec = nil
 
                     -- Decide if we should spawn a boss mutant
-                    if active_boss_mutant == 0 and boss_random_squad and (spawn_boss_chance <= boss_spawn_probability) then
+                    if active_boss_mutant == 0 and boss_random_squad and (spawn_boss_chance <= boss_spawn_probability) and boss_spawn_attempted < 1 and game_timer("check", 8) >= 720 then
                         chosen_squad = boss_random_squad
                         squad_sec = boss_random_squad.sec
+                        boss_spawn_attempted = boss_spawn_attempted + 1 -- count the boss spawn attempt
+                        game_timer("mark", 8) -- mark the boss spawn attempt time
                     else
                         chosen_squad = random_squad
                         squad_sec = random_squad and random_squad.sec
@@ -389,7 +394,7 @@ function spawn_mutants()
                                 if squad:npc_count() < actor_rank_value then
                                     if check_ltx_contains_value(plugin_file_name, "normal_mutants", squad:section_name()) or check_ltx_contains_value(plugin_file_name, "weak_mutants", squad:section_name()) then -- check if squad is weak or normal tier
                                         local half_squad = half_max_squad_size(actor_rank_value)
-                                        add_squad_members(squad, half_squad)
+                                        add_squad_members(squad, half_squad, selected_smart_id)
                                     end
                                 end
                             end
@@ -593,12 +598,15 @@ end
 
 function check_ltx_contains_value(filename, section, target_value)
     local ini = ini_file(filename)
-    if not ini then return false end -- Handle file not found
+    if not ini then 
+        pr("Error: Could not load LTX file: " .. filename)
+        return false 
+    end -- Handle file not found
 
     local line_count = ini:line_count(section)
     for i = 0, line_count - 1 do
-        local _, _, value = ini:r_line_ex(section, i, "", "")
-        if value and value == target_value then
+        local id, key, value = ini:r_line_ex(section, i, "", "") --Get only the key part
+        if key and string.find(key, target_value) then -- Check if target_value is part of the key
             return true -- Target value found
         end
     end
@@ -846,6 +854,7 @@ function save_state(m_data)
     m_data.respawn_delay = respawn_delay
     m_data.active_boss_mutant = active_boss_mutant
     m_data.active_passive_squad = active_passive_squad
+    m_data.marked_times = marked_times
 end
 
 -- Load the state of the script
@@ -858,6 +867,7 @@ function load_state(m_data)
     respawn_delay = m_data.respawn_delay
     active_boss_mutant = m_data.active_boss_mutant or 0
     active_passive_squad = m_data.active_passive_squad or {}
+    marked_times = m_data.marked_times or {}
 end
 
 -- Runs when changing level
@@ -952,7 +962,7 @@ end
 
 -- requires demonized_geometry_ray.script to work
 function is_actor_safe()
-    if game_timer("check", 7) < 1 then return end
+    if game_timer("check", 5) < 1 then return end
     game_timer("mark", 7)
 
     local surge_state = GetEvent("surge", "state")
@@ -1159,9 +1169,6 @@ function assign_random_smart_target()
 end
 
 function update_mutant_spawn_status()
-    -- Reset the time event to run again in 60 seconds
-    ResetTimeEvent("cycle", "update_mutant_spawn_status", 120)
-
     check_if_in_safe_zone()
     store_boss_mutant_npcs()
     notify_boss_mutant_status()
@@ -1205,9 +1212,9 @@ function actor_on_first_update()
     load_smart_terrain_exemptions()
     save_respawn_smarts()
 
-    init_ray_table()
+    update_mutant_spawn_status()
 
-    CreateTimeEvent("cycle", "update_mutant_spawn_status", 60, update_mutant_spawn_status)
+    init_ray_table()
     
     if not active_spawns[1] or #active_spawns == 0 then
         shuffle_smart_ids() -- reshuffle smart id order
@@ -1236,21 +1243,76 @@ function store_boss_mutant_npcs()
     end
 end
 
+local function extractPrefix(str)
+    if str then -- Handle nil input
+      return str:match("^(%a+)") or str  -- Capture alphabetic chars or return original if no "_"
+    else
+      return "Unknown"
+    end
+end
+
+function capitalizeFirstLetter(str)
+    if str and #str > 0 then  --Handle nil or empty strings
+      return string.upper(string.sub(str, 1, 1)) .. string.sub(str, 2)
+    else
+      return str  --Return original if nil or empty
+    end
+end
+
 function monster_on_death_callback(npc, who)
-	local id = npc:id()
+    local id = npc:id()
     local killer = who:name()
-    local reward_money = math.random(2000, 5000)
-    local message = "You received " .. reward_money .. " for killing the boss mutant."
-    for stored_id in pairs(boss_mutant_squad_npcs) do
-        if stored_id == id and killer == "actor" then
-            db.actor:give_money(reward_money)
-            news_manager.send_tip(db.actor, message, nil, nil, 3000)
-            break
+    local victim_section = npc:section()
+    local full_victim_section = "respawn_" .. victim_section
+    local victim_name = extractPrefix(victim_section)
+
+    -- Boss mutant reward and goodwill adjustment`
+    if check_ltx_contains_value(plugin_file_name, "boss_mutants", full_victim_section) and killer == "actor" then
+        pr("!Boss mutant was killed")
+        local boss_mutant_weight = tonumber(read_ltx_section(plugin_file_name,"boss_mutant_weight", victim_name)) or 0
+        local reward_money = math.random((1000 * boss_mutant_weight), (5000 * boss_mutant_weight))
+
+        local combined_message = "You received " .. reward_money .. " for killing the boss mutant."
+
+        -- Goodwill reward based on witness
+        local witness = FindFriendlyWitness(npc, who, nil, nil, false, true)
+        if witness then
+            local witness_community = character_community(witness)
+            local goodwill_reward = math.max(0, (boss_mutant_weight * 5)) -- ensure positive value
+            if goodwill_reward > 0 then
+                game_relations.change_factions_community_num(witness_community, db.actor:id(), goodwill_reward)
+                local witness_faction_name = read_ltx_section(plugin_file_name,"faction_names", witness_community) or ""
+                combined_message = combined_message .. string.format("\nYou also gained %d goodwill with the %s faction.", goodwill_reward, capitalizeFirstLetter(witness_faction_name))
+            end
         end
+
+        news_manager.send_tip(db.actor, combined_message, nil, nil, 3000)
+        db.actor:give_money(reward_money)
     end
 
+    -- Passive creature goodwill penalty (remains unchanged)
+    if enable_goodwill_penalty then
+        if killer == "actor" then
+            local witness = FindWitness(npc, who, nil, nil, false, true)
+            if witness then
+                local witness_community = character_community(witness)
+                local witness_faction_name = read_ltx_section(plugin_file_name,"faction_names", witness_community) or ""
+                local fauna_weight = tonumber(read_ltx_section(plugin_file_name,"passive_fauna_weight", victim_name)) or 0
+                local faction_weight = tonumber(read_ltx_section(plugin_file_name,"faction_weight", witness_community)) or 0
+                local goodwill_value = fauna_weight * faction_weight
+                if goodwill_value > 0 then
+                    local goodwill_reduction = goodwill_value * -1
+                    game_relations.change_factions_community_num(witness_community, db.actor:id(), goodwill_reduction)
+                    actor_menu.set_msg(1, "Victim: " .. victim_name .. " Weight: " .. fauna_weight .. " Witness: " .. witness_community .. " Weight: " .. faction_weight .. " Good will Penalty: " .. goodwill_value, 2)
+                    local goodwill_penalty_message = string.format("You have lost %d goodwill with the %s faction for killing a %s.", goodwill_value, capitalizeFirstLetter(witness_faction_name), capitalizeFirstLetter(victim_name))
+                    news_manager.send_tip(db.actor, goodwill_penalty_message, nil, nil, 3000)
+                end
+            end
+        end
+    end
     remove_attacked_npc_id(npc)
 end
+
 
 function monster_on_loot_init(victim, loot_table)
     if math.random() <= 0.30 then -- 30% chance to get an artifact when looting a boss mutant
@@ -1261,6 +1323,7 @@ function monster_on_loot_init(victim, loot_table)
             -- Check if the victim's section is in the boss_names list
             for _, boss_name in ipairs(boss_names) do
                 boss_name = string.gsub(boss_name, "respawn_", "")
+
                 if string.find(boss_name, victim:section()) then
                     -- If it's a boss, add a random reward from boss_rewards
                     local random_reward_index = math.random(1, #boss_rewards)
@@ -1347,6 +1410,15 @@ function actor_on_update()
         pr("-- Retargeting Passive Fauna")
         retarget_passive_fauna()
         game_timer("mark", 6)
+    end
+
+    if game_timer("check", 9) >= 60 then
+        update_mutant_spawn_status()
+        game_timer("mark", 9)
+    end
+
+    if game_timer("check", 10) >= 30 then
+        actor_in_safe_zone =  check_actor_in_safe_zone()
     end
 
     --show_move_state()
@@ -1617,9 +1689,6 @@ function retarget_vanilla_mutants()
         end
 end
 
--- Table to hold marked times
-marked_times = marked_times or {}
-
 function game_timer(state, id)
     if id == nil and state ~= "initialize" then
         return false, "Error: ID is required for this state."
@@ -1755,6 +1824,8 @@ function get_spawnable_squads_report()
     pr("  - Player Rank: " .. get_rank_description(player_rank))
     local player_rank_value = get_rank_value(player_rank)
     pr("  - Player Rank Value: " .. tostring(player_rank_value))
+    pr("  - Difficulty Level: " .. difficulty_level)
+    pr("  - Difficulty Value: " .. difficulty_value)
 end
 
 function get_current_game_values()
@@ -2142,6 +2213,78 @@ function spawn_passive_squads_near_actor()
     end
 end
 
+function FindWitness(victim, who, same_as_victim, same_as_who, not_in_combat, can_see)
+    local comm = victim and character_community(victim)
+    local comm_sender
+    local comm_who = who and character_community(who)
+    local who_id = who and who:id()
+    local t = {}
+    can_see = can_see or nil -- Default to nil if not specified
+  
+    for i = 1, #db.OnlineStalkers do
+      if (who_id == nil) or (db.OnlineStalkers[i] ~= who_id) then
+        local st = db.storage[db.OnlineStalkers[i]]
+        local npc = st and st.object
+        if (npc and IsStalker(npc) and npc:alive() and not get_object_story_id(db.OnlineStalkers[i])) then
+          if (not_in_combat == nil) or (not_in_combat and not npc:best_enemy()) or (not_in_combat ~= true) then
+            comm_sender = npc:character_community()
+            if (same_as_victim == nil) or (same_as_victim and comm_sender == comm) or (same_as_victim == false and comm_sender ~= comm) then
+              if (same_as_who == nil) or (same_as_who and comm_sender == comm_who) or (same_as_who == false and comm_sender ~= comm_who) then
+                -- Add a check here for your channel status if needed.  Replace with your actual check.
+                if true then -- Replace 'true' with your channel status check
+                  if (can_see == nil) or (can_see and npc:see(victim)) or (can_see == false) then
+                    t[#t + 1] = npc
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  
+    if #t == 0 then
+      return nil
+    end
+    return t[math.random(#t)]
+  end
+
+  function FindFriendlyWitness(victim, who, same_as_victim, same_as_who, not_in_combat, can_see)
+    local comm = victim and character_community(victim)
+    local comm_sender
+    local comm_who = who and character_community(who)
+    local who_id = who and who:id()
+    local t = {}
+    can_see = can_see or nil -- Default to nil if not specified
+
+    for i = 1, #db.OnlineStalkers do
+        if (who_id == nil) or (db.OnlineStalkers[i] ~= who_id) then
+            local st = db.storage[db.OnlineStalkers[i]]
+            local npc = st and st.object
+            if (npc and IsStalker(npc) and npc:alive() and not get_object_story_id(db.OnlineStalkers[i])) then
+                if (not_in_combat == nil) or (not_in_combat and not npc:best_enemy()) or (not_in_combat ~= true) then
+                    comm_sender = npc:character_community()
+                    if (same_as_victim == nil) or (same_as_victim and comm_sender == comm) or (same_as_victim == false and comm_sender ~= comm) then
+                        if (same_as_who == nil) or (same_as_who and comm_sender == comm_who) or (same_as_who == false and comm_sender ~= comm_who) then
+                            -- Check if the potential witness is NOT an enemy to the player
+                            if not game_relations.is_factions_enemies(character_community(db.actor), comm_sender) then
+                                if (can_see == nil) or (can_see and npc:see(victim)) or (can_see == false) then
+                                    t[#t + 1] = npc
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    if #t == 0 then
+        return nil
+    end
+    return t[math.random(#t)]
+end
+
 
 -- functions for dev purposes only
 function on_key_press(key)
@@ -2149,6 +2292,8 @@ function on_key_press(key)
         get_spawnable_squads_report()
         get_active_spawns_report()
         news_manager.send_tip(db.actor, string.format("AVAILABLE SMARTS: %d  Mutant POOL: %d  MAX ACTIVE SPAWNS: %d Active Spanws: %d", count_available_smart_terrains(), #squads_to_spawn, max_active_spawns, #active_spawns), nil,nil, 3000)
+        local actor_community = character_community(db.actor)
+        actor_menu.set_msg(1, "Community: " .. actor_community, 2)
     end
 
     if key == DIK_keys["DIK_O"] and enable_debug then

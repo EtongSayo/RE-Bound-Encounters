@@ -208,11 +208,6 @@
 		<text>Psysucker</text>
 	</string>
 
-
-
-
-
-
     <!-- Boss Spawn Warnings -->
 	<string id="rebound_encounters_boss_spawn_warnings_1">
 	<text>Stalkers, beware! A %s has been sighted %s. Move cautiously, this one is a real threat.</text>
@@ -256,6 +251,55 @@
 	<string id="rebound_encounters_boss_spawn_warnings_14">
 	<text>Warning! A %s has been spotted prowling %s. Keep your distance it is a deadly one.</text>
 	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_15">
+	<text>Attention! A %s has been seen roaming %s. If you're nearby, proceed with extreme caution.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_16">
+	<text>Warning to all! A dangerous %s has been spotted %s. Engage at your own risk.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_17">
+	<text>Stalkers, take heed! A %s has been seen %s. Don't go alone if you must investigate.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_18">
+	<text>Urgent report! A %s has emerged %s. This is no ordinary mutant. Watch yourselves.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_19">
+	<text>Alert! A %s is terrorizing the area %s. Avoid unless you're looking for a fight.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_20">
+	<text>Danger ahead! A %s has been seen lurking %s. If you value your skin, stay away.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_21">
+	<text>Heads up! A %s is on the prowl %s. Only the well-armed should get close.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_22">
+	<text>Be advised! A %s has been sighted %s. Expect hostility.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_23">
+	<text>Warning, stalkers! A %s is stalking prey %s. If you're out there, move carefully.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_24">
+	<text>Stalkers, be wary! A %s has been seen moving %s. It won’t hesitate to attack.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_25">
+	<text>Alert! A %s is roaming %s. It is highly aggressive. Engagement is not advised.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_26">
+	<text>Warning! Reports confirm a %s moving %s. Keep your weapons ready if you're nearby.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_27">
+	<text>Stay sharp, stalkers! A %s has been spotted %s. Danger is guaranteed.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_28">
+	<text>Be on alert! A %s is active %s. If you're out there, keep your guard up.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_29">
+	<text>Attention all stalkers! A %s has been seen lurking %s. Tread carefully.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_warnings_30">
+	<text>Warning! A %s is reported to be prowling %s. It won’t go down easy.</text>
+	</string>
+
 
 	<!-- Boss Still Active Wwarnings -->
 	<string id="rebound_encounters_boss_spawn_still_active_1">
@@ -365,6 +409,52 @@
 	<string id="rebound_encounters_boss_spawn_eliminated_15">
 	<text>The %s is no longer a concern %s. Thanks for your efforts, stalkers!</text>
 	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_16">
+	<text>Attention, stalkers! The %s has been eliminated %s. The Zone just got a little safer.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_17">
+	<text>Good work, everyone! The %s was neutralized %s. Stay sharp, more dangers lurk ahead.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_18">
+	<text>The %s has been taken down %s. Well done to those who stood their ground!</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_19">
+	<text>Stalkers, be advised! The %s has been defeated %s. The Zone is a bit less hostile.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_20">
+	<text>Victory for the stalkers! The %s was taken out %s. Stay alert for future threats.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_21">
+	<text>Alert! The %s has been slain %s. The balance of power shifts again.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_22">
+	<text>The %s was finally brought down %s. The Zone breathes easier for now.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_23">
+	<text>Reports confirm that the %s has been eliminated %s. Keep your weapons ready, though.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_24">
+	<text>The %s met its end %s. Stay vigilant, more beasts are always lurking.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_25">
+	<text>Another monster down! The %s was eliminated %s. The fight never ends, stalkers.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_26">
+	<text>The %s has been hunted down %s. For now, the area is clear.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_27">
+	<text>Stalkers, the %s has been dealt with %s. Keep your guard up. There's always another.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_28">
+	<text>Good news! The %s was neutralized %s. But the Zone never stays quiet for long.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_29">
+	<text>Stalkers, the %s has been terminated %s. The Zone watches, waiting for the next hunt.</text>
+	</string>
+	<string id="rebound_encounters_boss_spawn_eliminated_30">
+	<text>Confirmed: The %s has been eliminated %s. A rare victory, but not the last fight.</text>
+	</string>
+
 
 	<!-- Level Rumors -->
 	<string id="rebound_encounters_level_rumors_1">
@@ -448,6 +538,76 @@
 	<string id="rebound_encounters_level_rumors_27">
 	<text>You know the Zone. If it has a name like %s, it is bad news for all of us.</text>
 	</string>
+	<string id="rebound_encounters_level_rumors_28">
+	<text>Stalkers whisper about a %s lurking in the dark. They say it is watching… waiting.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_29">
+	<text>Whatever the %s is, it is not natural. Some say it is worse than the bloodsuckers.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_30">
+	<text>The %s does not leave tracks like normal mutants. Either it floats, or it is something new.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_31">
+	<text>Heard from a trader that the %s has a scream that makes your skin crawl. No thanks.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_32">
+	<text>A veteran swears the %s can vanish into thin air. Like it never existed.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_33">
+	<text>One thing is certain, stalker. If you hear the %s, you might not live to tell about it.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_34">
+	<text>A guide said he lost two men to a %s. No bodies, no blood. Just gone.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_35">
+	<text>Some stalkers say the %s is just a myth. The ones who have seen it say otherwise.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_36">
+	<text>Whatever the %s is, it does not fear gunfire. That alone should scare you.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_37">
+	<text>Word is the %s leaves behind strange symbols carved into wood and stone. What does that mean?</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_38">
+	<text>A squad went hunting for the %s. Only one came back, and he will not speak of what he saw.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_39">
+	<text>You know what they say, stalker. If the Zone creates it, it is never something good. Especially a %s.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_40">
+	<text>Been hearing strange howls at night. Some say it is the %s calling its pack.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_41">
+	<text>Do not trust your eyes near a %s. Some say it can make you see things that are not there.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_42">
+	<text>A stalker claimed the %s was following him, mimicking his own footsteps. He barely made it out alive.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_43">
+	<text>The %s does not just kill, it toys with its prey. A cruel thing, whatever it is.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_44">
+	<text>Something about the %s does not sit right. Even mutants seem to avoid it.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_45">
+	<text>A scientist was studying the %s. One night, he disappeared. Just like that.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_46">
+	<text>A lone survivor swears the %s whispered his name before attacking. Impossible… right?</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_47">
+	<text>If you hear a second set of footsteps behind you but see nothing… run. It might be a %s.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_48">
+	<text>Got a warning from a trader. If you see a %s, do not stare too long. It might notice.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_49">
+	<text>Some stalkers carry extra rounds just for the %s. Normal ammo is not enough, they say.</text>
+	</string>
+	<string id="rebound_encounters_level_rumors_50">
+	<text>They say the Zone whispers names of the dead near a %s. No one knows why.</text>
+	</string>
+
 
 	<!-- Encounter News -->
 	<string id="rebound_encounters_encounter_news_1">
@@ -594,8 +754,163 @@
 	<string id="rebound_encounters_encounter_news_48">
 	<text>Rumors are saying %s had to use a lot of ammo to fend off a %s at %s.</text>
 	</string>
+	<string id="rebound_encounters_encounter_news_49">
+	<text>They say %s ran out of bullets while dealing with a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_50">
+	<text>Some stalkers claim %s had a terrifying encounter with a %s at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_51">
+	<text>Rumors are spreading that %s barely made it out after facing a %s in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_52">
+	<text>Word is %s put down a %s, but not before taking a hit at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_53">
+	<text>They found %s exhausted after fending off a %s somewhere in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_54">
+	<text>Stalkers say %s had to climb up high to escape a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_55">
+	<text>Reports say %s lured a %s into an ambush at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_56">
+	<text>Some claim %s barely dodged a swipe from a %s while at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_57">
+	<text>There are whispers that %s left a few traps behind for a %s in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_58">
+	<text>They say %s lost a pack of supplies while running from a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_59">
+	<text>A few claim %s outmaneuvered a %s and led it into a dead zone at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_60">
+	<text>Word around camp is that %s watched a %s from afar before slipping away at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_61">
+	<text>Reports say %s had to use his last medkit after an encounter with a %s at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_62">
+	<text>Some say %s lured a %s into another group's territory near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_63">
+	<text>Rumors say %s almost got caught between two %s while sneaking through %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_64">
+	<text>They claim %s had to double back after running into a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_65">
+	<text>Word is %s had a lucky escape from a %s while scavenging in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_66">
+	<text>Somebody overheard %s cursing about how a %s ruined his trip to %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_67">
+	<text>They say %s got into a standoff with a %s but had to retreat from %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_68">
+	<text>A few say %s barely survived a close-range fight with a %s in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_69">
+	<text>Stalkers say %s had a narrow escape from a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_70">
+	<text>They claim %s used a flare to distract a %s before slipping away at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_71">
+	<text>Word is %s set up a barricade to keep a %s from following him in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_72">
+	<text>Some claim %s shot at a %s but lost track of it in the shadows of %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_73">
+	<text>Reports say %s barely escaped a %s by diving into cover at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_74">
+	<text>They say %s had to choose between fighting a %s or running away from %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_75">
+	<text>Some whisper that %s baited a %s into a firefight with others near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_76">
+	<text>Word is %s only got away from a %s because something else distracted it at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_77">
+	<text>A few say %s left behind a trail of blood after escaping a %s in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_78">
+	<text>Reports are coming in that %s had to use all his ammo against a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_79">
+	<text>They say %s was chased by a %s but managed to shake it off near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_80">
+	<text>Some claim %s injured a %s but was too wounded to finish the job at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_81">
+	<text>Word is %s saw a %s but decided not to take his chances at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_82">
+	<text>They say %s had to jump into cover after spotting a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_83">
+	<text>Rumors say %s barely made it through after getting attacked by a %s at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_84">
+	<text>Stalkers claim %s tricked a %s into running into danger at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_85">
+	<text>Reports say %s was injured after getting ambushed by a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_86">
+	<text>They say %s nearly walked right into a %s but noticed just in time at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_87">
+	<text>Word is %s had to run out of the area after attracting a %s in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_88">
+	<text>Some claim %s was shouting warnings about a %s after barely escaping %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_89">
+	<text>They say %s climbed onto a structure to escape a %s at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_90">
+	<text>Stalkers mention %s lost his nerve after seeing a %s in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_91">
+	<text>Reports say %s had to outmaneuver a %s before it lost interest at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_92">
+	<text>They say %s was struggling to reload while running from a %s in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_93">
+	<text>Word around is %s had a tense standoff with a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_94">
+	<text>Some whisper that %s was forced to leave his pack behind escaping a %s in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_95">
+	<text>They say %s got separated from his group after a %s attacked at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_96">
+	<text>Rumors are spreading that %s was forced to take a detour to avoid a %s near %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_97">
+	<text>Reports say %s saw something big moving near %s but isn't sure if it was a %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_98">
+	<text>They say %s got scratched up bad after a close call with a %s at %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_99">
+	<text>Some claim %s had a lucky escape after facing off against a %s in %s.</text>
+	</string>
+	<string id="rebound_encounters_encounter_news_100">
+	<text>Word is %s was the only survivor of a fight with a %s near %s.</text>
+	</string>
 
 		<!-- for Dynamic News -->
 	
-
 </string_table>
